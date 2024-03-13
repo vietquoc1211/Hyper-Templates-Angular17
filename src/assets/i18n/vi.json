@@ -1,0 +1,15 @@
+{
+    "HELLO": "Xin chào {{value}}",
+    "textLoading": "Đang làm plan...",
+    "title.dashboard": "DASHBOARD",
+    "title.user": "QUẢN LÝ TÀI KHOẢN",
+    "title.login": "ĐĂNG NHẬP",
+    "login": "TRANG ĐĂNG NHẬP",
+    "login.welcome": "Xin chào, Kháng hàng",
+    "login.signin": "Đăng nhập để tiếp tục",
+    "login.username": "Tên tài khoản",
+    "login.password": "Mật khẩu",
+    "login.rememberMe": "Nhớ tài khoản",
+    "login.forgotPassword": "Quên mật khẩu?",
+    "login.signinBtn": "ĐĂNG NHẬP"
+}

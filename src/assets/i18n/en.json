@@ -1,0 +1,15 @@
+{
+    "HELLO": "Hello {{value}}",
+    "textLoading": "Loading...",
+    "login": "LOGIN WORKED",
+    "title.dashboard": "DASHBOARD",
+    "title.user": "USER MANAGEMENT",
+    "title.login": "SIGN IN",
+    "login.welcome": "Welcome, User",
+    "login.signin": "Sign in to continue",
+    "login.username": "Username",
+    "login.password": "Password",
+    "login.rememberMe": "Remember Me",
+    "login.forgotPassword": "Forgot Password?",
+    "login.signinBtn": "SIGN IN"
+}

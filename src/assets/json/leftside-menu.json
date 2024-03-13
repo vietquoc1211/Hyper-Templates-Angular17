@@ -1,0 +1,201 @@
+{
+    "dataMenu": [
+        {
+            "groupsTilte": "NAVIGATION",
+            "hideMenu": "0",
+            "Pages": [
+                {
+                    "pageTitle": "Dashboards",
+                    "routerLink": "",
+                    "icon": "uil-home-alt",
+                    "id":"dashboards",
+                    "subPages": [
+                        {
+                            "pageTitle": "Analytics",
+                            "routerLink": "/dashboards/analytics",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Ecommerce",
+                            "routerLink": "/dashboards/ecommerce",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Projects",
+                            "routerLink": "/dashboards/projects",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "CRM",
+                            "routerLink": "/dashboards/CRM",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "E-Wallet",
+                            "routerLink": "/dashboards/e-wallet",
+                            "icon": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "groupsTilte": "APPS",
+            "hideMenu": "0",
+            "Pages": [
+                {
+                    "pageTitle": " Calender",
+                    "routerLink": "/calender",
+                    "icon": "uil-calender",
+                    "id":"calender"
+                },
+                {
+                    "pageTitle": "Chat",
+                    "routerLink": "/app-chat",
+                    "icon": "uil-comments-alt",
+                    "id":"app-chat"
+                },
+                {
+                    "pageTitle": " CRM",
+                    "routerLink": "",
+                    "icon": "uil uil-tachometer-fast",
+                    "id":"sidebarCrm",
+                    "subPages": [
+                        {
+                            "pageTitle": "Projects",
+                            "routerLink": "/crm/projects",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Orders List",
+                            "routerLink": "/crm/orders-list",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Clients",
+                            "routerLink": "/crm/clients-list",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Management",
+                            "routerLink": "/crm/management",
+                            "icon": ""
+                        }
+                    ]
+                },
+                {
+                    "pageTitle": " Ecommerce",
+                    "routerLink": "",
+                    "icon": "uil-store",
+                    "id":"Ecommerce",
+                    "subPages": [
+                        {
+                            "pageTitle": "Products",
+                            "routerLink": "/ecommerce/products",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Products Details",
+                            "routerLink": "/ecommerce/products-detail",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Orders",
+                            "routerLink": "/ecommerce/orders",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Orders Details",
+                            "routerLink": "/ecommerce/orders-detail",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Customers",
+                            "routerLink": "/ecommerce/customers",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Shopping Cart",
+                            "routerLink": "/ecommerce/shopping-cart",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Checkout",
+                            "routerLink": "/ecommerce/checkout",
+                            "icon": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "groupsTilte": "Quản lý hạng thẻ",
+            "hideMenu": "1",
+            "Pages": [
+                {
+                    "pageTitle": "Phân hạng khách hàng",
+                    "routerLink" : "",
+                    "icon": "uil-cell",
+                    "id":"sideCustomergrade",
+                    "subPages": 
+                    [
+                        {
+                            "pageTitle": "Danh sách các hạng thẻ khách hàng",
+                            "routerLink": "/grade-management/customer-grade-list",
+                            "icon": ""
+                        }
+                        ,
+                        {
+                            "pageTitle": "Chi tiết hạng thẻ khách hàng",
+                            "routerLink": "/grade-management/customer-grade-detail",
+                            "icon": ""
+                        }     
+                    ]
+                },
+                {
+                    "pageTitle": "Quản lý hạng thẻ",
+                    "routerLink" : "",
+                    "icon": "uil-bright",
+                    "id":"sidebargrademanagement",
+                    "subPages": 
+                    [
+                        {
+                            "pageTitle": "Thông tin hạng thẻ",
+                            "routerLink": "/grade-management/grade-information",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Thiết lập quy tắc tích lũy điểm theo hạng thẻ",
+                            "routerLink": "/grade-management/grade-setting-accumulation",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Cài đặt quy tắc tích lũy cho các hạng thẻ",
+                            "routerLink": "/grade-management/setting-rule-customer-grade",
+                            "icon": ""
+                        }
+                    ]
+                },
+                {
+                    "pageTitle": "Quản lý ưu đãi hạng thẻ",
+                    "routerLink" : "",
+                    "icon": "uil-gift",
+                    "id":"sidebargradepromotion",
+                    "subPages": 
+                    [
+                        {
+                            "pageTitle": "Thông tin chương trình ưu đãi theo hạng thẻ ",
+                            "routerLink": "/grade-management/grade-promotion-info",
+                            "icon": ""
+                        },
+                        {
+                            "pageTitle": "Cài đặt ưu đãi cho các hạng thẻ ",
+                            "routerLink": "/grade-management/grade-promotion-setting",
+                            "icon": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,5 @@
+<p-paginator #paginator [rows]="rows" [totalRecords]="totalRecords" [first]="first" (onPageChange)="paginate($event)"
+    [alwaysShow]="alwaysShow" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+    [dropdownAppendTo]="dropdownAppendTo">
+</p-paginator>

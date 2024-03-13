@@ -1,0 +1,107 @@
+<div class="leftside-menu menuitem-active">
+    <!-- LOGO -->
+    <a routerLink="/dashboards" class="logo text-center logo-light">
+        <span class="logo-lg">
+            <img src="assets/images/logo.png" alt="" height="40">
+        </span>
+        <span class="logo-sm">
+            <img src="assets/images/logo_sm.png" alt="" height="16">
+        </span>
+    </a>
+    <!-- LOGO -->
+    <a routerLink="/dashboards" class="logo text-center logo-dark">
+        <span class="logo-lg">
+            <img src="assets/images/logo-dark.png" alt="" height="40">
+        </span>
+        <span class="logo-sm">
+            <img src="assets/images/logo_sm_dark.png" alt="" height="16">
+        </span>
+    </a>
+    <!-- Sidebar Hover Menu Toggle Button -->
+    <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Show Full Sidebar"
+        data-bs-original-title="Show Full Sidebar">
+        <i class="ri-checkbox-blank-circle-line align-middle"></i>
+    </div>
+    <!-- Full Sidebar Menu Close Button -->
+    <div class="button-close-fullsidebar">
+        <i class="ri-close-fill align-middle"></i>
+    </div>
+
+    <div class="h-100 show" id="leftside-menu-container" data-simplebar="init">
+
+        <div class="simplebar-wrapper" style="margin: 0px;">
+            <div class="simplebar-height-auto-observer-wrapper">
+            </div>
+            <!--- Sidemenu -->
+            <div class="simplebar-mask">
+                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                    <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content"
+                        style="height: 100%; overflow: hidden scroll;">
+                        <div class="simplebar-content" style="padding: 0px;">
+
+                            <!-- Leftbar User -->
+                            <div class="leftbar-user">
+                                <a href="pages-profile.html">
+                                    <img src="assets/images/users/avatar-1.jpg"
+                                        alt="user-image" height="42" class="rounded-circle shadow-sm">
+                                    <span class="leftbar-user-name mt-2">Viet Bui</span>
+                                </a>
+                            </div>
+
+                            <!--- Sidemenu -->
+                            <ul class="side-nav">
+                                <!-- load dynamic menu -->
+                                <ng-container *ngFor="let data of dataMenu;let i = index">
+                                    <!-- Groups tilte -->
+                                    <ng-container *ngIf="data.hideMenu=='0'">
+                                        <li class="side-nav-title side-nav-item">{{data.groupsTilte}}</li>
+                                        <ng-container *ngFor="let menu of data.Pages;let i = index">
+                                            <!-- Pages Level 1 -->
+                                            <li class="side-nav-item">
+                                                <a *ngIf="!menu.routerLink" data-bs-toggle="collapse" href="#{{menu.id}}" aria-expanded="false" class="side-nav-link">
+                                                    <i class="{{menu.icon}}"></i>
+                                                    <span>{{menu.pageTitle}}</span>
+                                                    <span class="menu-arrow"></span>
+                                                </a>
+                                                <a *ngIf="menu.routerLink" data-bs-toggle="collapse" href="#{{menu.id}}" aria-expanded="false" class="side-nav-link" routerLink="{{menu.routerLink}}">
+                                                    <i class="{{menu.icon}}"></i>
+                                                    <span>{{menu.pageTitle}}</span>
+                                                </a>
+                                                <div class="collapse" id="{{menu.id}}" routerLinkActive="show">
+                                                    <ul class="side-nav-second-level" *ngFor="let subMenu of menu.subPages; let isub = index">
+                                                        <li>
+                                                            <a routerLink="{{subMenu.routerLink}}" routerLinkActive="active"> {{subMenu.pageTitle}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ng-container>    
+                                    </ng-container>
+                                </ng-container>
+                            </ul>
+                             <!--- End Sidemenu -->
+                             <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Help Box -->
+            <app-help-box></app-help-box>
+            <!-- end Help Box -->
+
+            <!-- End Sidebar -->
+            <div class="simplebar-placeholder" style="width: auto; height: 1757px;"></div>
+
+        </div>
+
+        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+            <div class="simplebar-scrollbar" style="width: 0px; display: none; transform: translate3d(0px, 0px, 0px);">
+            </div>
+        </div>
+        <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+            <div class="simplebar-scrollbar"
+                style="height: 441px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+        </div>
+    </div>
+    <!-- Sidebar -left -->
+</div>
