@@ -1,5 +1,5 @@
-import { Injectable, effect, signal } from '@angular/core';
-import { Subject } from 'rxjs';
+import { HostBinding, HostListener, Injectable, effect, signal } from '@angular/core';
+import { Subject, fromEvent, throttleTime } from 'rxjs';
 
 interface LayoutConfig {
     mode: string;
@@ -28,169 +28,270 @@ interface AppConfig {
     sidenav: SidenavConfig;
 }
 
-interface LayoutState {
-    staticMenuDesktopInactive: boolean;
-    overlayMenuActive: boolean;
-    profileSidebarVisible: boolean;
-    configSidebarVisible: boolean;
-    staticMenuMobileActive: boolean;
-    menuHoverActive: boolean;
-}
+// interface LayoutState {
+//     staticMenuDesktopInactive: boolean;
+//     overlayMenuActive: boolean;
+//     profileSidebarVisible: boolean;
+//     configSidebarVisible: boolean;
+//     staticMenuMobileActive: boolean;
+//     menuHoverActive: boolean;
+// }
 
 @Injectable({
     providedIn: 'root',
 })
+
 export class LayoutService {
-    _config: AppConfig = {
-        theme: "light",
-        nav: "vertical",
-        layout: {
-            mode: "fluid",
-            position: "fixed"
-        },
-        topbar: {
-            color: "light"
-        },
-        menu: {
-            color: "dark"
-        },
-        sidenav: {
-            size: "default",
-            user: !1
-        }
-    };
     
-    config = signal<AppConfig>(this._config);
-
-    state: LayoutState = {
-        staticMenuDesktopInactive: false,
-        overlayMenuActive: false,
-        profileSidebarVisible: false,
-        configSidebarVisible: false,
-        staticMenuMobileActive: false,
-        menuHoverActive: false,
-    };
-
     private configUpdate = new Subject<AppConfig>();
-
+    private showRightSidebarSubject = new Subject<void>();
     private overlayOpen = new Subject<any>();
 
     configUpdate$ = this.configUpdate.asObservable();
-
     overlayOpen$ = this.overlayOpen.asObservable();
+    showRightSidebar$ = this.showRightSidebarSubject.asObservable();
+
+    config: AppConfig;
+    html: HTMLElement = document.getElementsByTagName("html")[0];
+    defaultConfig!: AppConfig;
+    sidenavSize = 'default'; // initial value
+    storedConfig: string | null = sessionStorage.getItem("__HYPER_CONFIG__");
+
+    layoutAttribute: string | null = this.html.getAttribute("data-layout");
+    layoutModeAttribute: string | null = this.html.getAttribute("data-layout-mode");
+    layoutPositionAttribute: string | null = this.html.getAttribute("data-layout-position");
+    topbarColorAttribute: string | null = this.html.getAttribute("data-topbar-color");
+    sidenavSizeAttribute: string | null = this.html.getAttribute("data-sidenav-size");
+    sidenavUserAttribute: string | null = this.html.getAttribute("data-sidenav-user");
+    menuColorAttribute: string | null = this.html.getAttribute("data-menu-color");    
+    
+    // state: LayoutState = {
+    //     staticMenuDesktopInactive: false,
+    //     overlayMenuActive: false,
+    //     profileSidebarVisible: false,
+    //     configSidebarVisible: false,
+    //     staticMenuMobileActive: false,
+    //     menuHoverActive: false,
+    // };
 
     constructor() {
+        this.config = {} as AppConfig;
+        this.defaultConfig = {
+            theme: "light",
+            nav: "vertical",
+            layout: {
+                mode: "fluid",
+                position: "fixed"
+            },
+            topbar: {
+                color: "light"
+            },
+            menu: {
+                color: "dark"
+            },
+            sidenav: {
+                size: "default",
+                user: false
+            }
+        };
+
         effect(() => {
-            // const config = this.config();
-            // if (this.updateStyle(config)) {
-            //     this.changeTheme();
-            // }
-            // this.changeScale(config.scale);
-            // this.onConfigUpdate();
+            this.getLayoutConfig();
+        });
 
-            const storedConfig: string | null = sessionStorage.getItem("__HYPER_CONFIG__");
-                const defaultConfig: AppConfig = {
-                    theme: "light",
-                    nav: "vertical",
-                    layout: {
-                        mode: "fluid",
-                        position: "fixed"
-                    },
-                    topbar: {
-                        color: "light"
-                    },
-                    menu: {
-                        color: "dark"
-                    },
-                    sidenav: {
-                        size: "default",
-                        user: false
-                    }
-                };
-
-                let config: AppConfig = storedConfig ? JSON.parse(storedConfig) : { ...defaultConfig };
-
-                const htmlElement: HTMLElement = document.getElementsByTagName("html")[0];
-                const layoutAttribute: string | null = htmlElement.getAttribute("data-layout");
-                const layoutModeAttribute: string | null = htmlElement.getAttribute("data-layout-mode");
-                const layoutPositionAttribute: string | null = htmlElement.getAttribute("data-layout-position");
-                const topbarColorAttribute: string | null = htmlElement.getAttribute("data-topbar-color");
-                const sidenavSizeAttribute: string | null = htmlElement.getAttribute("data-sidenav-size");
-                const sidenavUserAttribute: string | null = htmlElement.getAttribute("data-sidenav-user");
-                const menuColorAttribute: string | null = htmlElement.getAttribute("data-menu-color");
-
-                config.nav = layoutAttribute === "topnav" ? "horizontal" : "vertical";
-                config.layout.mode = layoutModeAttribute || defaultConfig.layout.mode;
-                config.layout.position = layoutPositionAttribute || defaultConfig.layout.position;
-                config.topbar.color = topbarColorAttribute || defaultConfig.topbar.color;
-                config.sidenav.size = sidenavSizeAttribute || defaultConfig.sidenav.size;
-                config.sidenav.user = sidenavUserAttribute ? sidenavUserAttribute === "true" : defaultConfig.sidenav.user;
-                config.menu.color = menuColorAttribute || defaultConfig.menu.color;
-
-                htmlElement.setAttribute("data-bs-theme", config.theme);
-                htmlElement.setAttribute("data-layout-mode", config.layout.mode);
-                htmlElement.setAttribute("data-menu-color", config.menu.color);
-                htmlElement.setAttribute("data-topbar-color", config.topbar.color);
-                htmlElement.setAttribute("data-layout-position", config.layout.position);
-
-                if (config.nav === "vertical") {
-                    let sidenavSize: string = config.sidenav.size;
-                    if (window.innerWidth <= 767) {
-                        sidenavSize = "full";
-                    } else if (767 <= window.innerWidth && window.innerWidth <= 1140 && sidenavSize !== "full" && sidenavSize !== "fullscreen") {
-                        sidenavSize = "condensed";
-                    }
-                    htmlElement.setAttribute("data-sidenav-size", sidenavSize);
-                    if (config.sidenav.user) {
-                        htmlElement.setAttribute("data-sidenav-user", "true");
-                    } else {
-                        htmlElement.removeAttribute("data-sidenav-user");
-                    }
-                }
+        signal(() => {
+            this._adjustLayout();
+        });
+        
+        // resize event
+        fromEvent(window, 'resize').pipe(
+            throttleTime(200) // optional, limits the number of events per 200ms
+        ).subscribe(() => {
+            if(window.innerWidth > 1140 && this.sidenavSize != 'default') {
+                this.sidenavSize = 'default';
+                this.html.setAttribute("data-sidenav-size", this.sidenavSize);
+            }
+            else if(window.innerWidth < 1140 && window.innerWidth > 768 && this.sidenavSize != 'condensed') {
+                this.sidenavSize = 'condensed';
+                this.html.setAttribute("data-sidenav-size", this.sidenavSize);
+            }
+            else if(window.innerWidth <= 768 && this.sidenavSize != 'full') {
+                this.sidenavSize = 'full';
+                this.html.setAttribute("data-sidenav-size", this.sidenavSize); 
+            }
         });
     }
+    
+    initConfig(): void {
+        // this.defaultConfig = JSON.parse(JSON.stringify(window.defaultConfig));
+        // this.config = JSON.parse(JSON.stringify(window.config));
+        this.setSwitchFromConfig();
+    }
+    
+    changeMenuColor(color: string): void {
+        this.config.menu.color = color;
+        this.html.setAttribute("data-menu-color", color);
+        this.setSwitchFromConfig();
+    }
 
-    // updateStyle(config: AppConfig) {
-    //     return (
-    //         config.theme !== this._config.theme ||
-    //         config.colorScheme !== this._config.colorScheme
-    //     );
-    // }
-
-    onMenuToggle() {
-        if (this.isCondensed()) {
-            this.state.overlayMenuActive = !this.state.overlayMenuActive;
-            if (this.state.overlayMenuActive) {
-                this.overlayOpen.next(null);
-            }
+    changeLeftbarSize(size: string, updateConfig: boolean = true): void {
+        this.html.setAttribute("data-sidenav-size", size);
+        if (updateConfig) {
+            this.config.sidenav.size = size;
+            this.setSwitchFromConfig();
         }
+    }
 
-        if (this.isDesktop()) {
-            this.state.staticMenuDesktopInactive =
-                !this.state.staticMenuDesktopInactive;
+    changeLayoutMode(mode: string, updateConfig: boolean = true): void {
+        this.html.setAttribute("data-layout-mode", mode);
+        if (updateConfig) {
+            this.config.layout.mode = mode;
+            this.setSwitchFromConfig();
+        }
+    }
+
+    changeLayoutPosition(position: string): void {
+        this.config.layout.position = position;
+        this.html.setAttribute("data-layout-position", position);
+        this.setSwitchFromConfig();
+    }
+
+    changeLayoutColor(color: string): void {
+        this.config.theme = color;
+        this.html.setAttribute("data-bs-theme", color);
+        this.setSwitchFromConfig();
+    }
+
+    changeTopbarColor(color: string): void {
+        this.config.topbar.color = color;
+        this.html.setAttribute("data-topbar-color", color);
+        this.setSwitchFromConfig();
+    }
+
+    changeSidebarUser(user: boolean): void {
+        this.config.sidenav.user = user;
+        if (user) {
+            this.html.setAttribute("data-sidenav-user", user.toString());
         } else {
-            this.state.staticMenuMobileActive =
-                !this.state.staticMenuMobileActive;
+            this.html.removeAttribute("data-sidenav-user");
+        }
+        this.setSwitchFromConfig();
+    }
 
-            if (this.state.staticMenuMobileActive) {
-                this.overlayOpen.next(null);
+    resetTheme(): void {
+        // this.config = JSON.parse(JSON.stringify(window.defaultConfig));
+        this.changeMenuColor(this.config.menu.color);
+        this.changeLeftbarSize(this.config.sidenav.size);
+        this.changeLayoutColor(this.config.theme);
+        this.changeLayoutMode(this.config.layout.mode);
+        this.changeLayoutPosition(this.config.layout.position);
+        this.changeTopbarColor(this.config.topbar.color);
+        this.changeSidebarUser(this.config.sidenav.user);
+        this._adjustLayout();
+    }
+
+    setSwitchFromConfig(): void {
+        sessionStorage.setItem("__HYPER_CONFIG__", JSON.stringify(this.config));
+        document.querySelectorAll(".right-bar input[type=checkbox]").forEach((e: Element) => {
+            const inputElement = e as HTMLInputElement;
+            inputElement.checked = false;
+        });
+    
+        let e: HTMLInputElement | null, 
+            t: HTMLInputElement | null, 
+            n: HTMLInputElement | null, 
+            a: HTMLInputElement | null, 
+            o: HTMLInputElement | null, 
+            r: HTMLInputElement | null, 
+            i: HTMLInputElement | null, 
+            c: HTMLInputElement | null;
+    
+        const s = this.config;
+    
+        if (s) {
+            e = document.querySelector(`input[type=radio][name=data-layout][value=${s.nav}]`);
+            t = document.querySelector(`input[type=radio][name=data-bs-theme][value=${s.theme}]`);
+            n = document.querySelector(`input[type=radio][name=data-layout-mode][value=${s.layout.mode}]`);
+            a = document.querySelector(`input[type=radio][name=data-topbar-color][value=${s.topbar.color}]`);
+            o = document.querySelector(`input[type=radio][name=data-menu-color][value=${s.menu.color}]`);
+            r = document.querySelector(`input[type=radio][name=data-sidenav-size][value=${s.sidenav.size}]`);
+            i = document.querySelector(`input[type=radio][name=data-layout-position][value=${s.layout.position}]`);
+            c = document.querySelector(`input[type=checkbox][name=sidebar-user]`);
+    
+            if (e) e.checked = true;
+            if (t) t.checked = true;
+            if (n) n.checked = true;
+            if (a) a.checked = true;
+            if (o) o.checked = true;
+            if (r) r.checked = true;
+            if (i) i.checked = true;
+            if (c && s.sidenav.user.toString() === "true") c.checked = true;
+        }
+    }
+
+    _adjustLayout(): void {
+        if (window.innerWidth <= 767.98) {
+            this.changeLeftbarSize("full", false);
+        } else if (window.innerWidth >= 767 && window.innerWidth <= 1140) {
+            if (this.config.sidenav.size !== "full" && this.config.sidenav.size !== "fullscreen") {
+                if (this.config.sidenav.size === "sm-hover") {
+                    this.changeLeftbarSize("condensed");
+                } else {
+                    this.changeLeftbarSize("condensed", false);
+                }
+            }
+        } else {
+            this.changeLeftbarSize(this.config.sidenav.size);
+            this.changeLayoutMode(this.config.layout.mode);
+        }
+    }
+
+    getLayoutConfig() {
+
+        this.config = this.storedConfig ? JSON.parse(this.storedConfig) : { ...this.defaultConfig };
+
+        this.config.nav = this.layoutAttribute === "topnav" ? "horizontal" : "vertical";
+        this.config.layout.mode = this.layoutModeAttribute || this.defaultConfig.layout.mode;
+        this.config.layout.position = this.layoutPositionAttribute || this.defaultConfig.layout.position;
+        this.config.topbar.color = this.topbarColorAttribute || this.defaultConfig.topbar.color;
+        this.config.sidenav.size = this.sidenavSizeAttribute || this.defaultConfig.sidenav.size;
+        this.config.sidenav.user = this.sidenavUserAttribute ? this.sidenavUserAttribute === "true" : this.defaultConfig.sidenav.user;
+        this.config.menu.color = this.menuColorAttribute || this.defaultConfig.menu.color;
+
+        this.html.setAttribute("data-bs-theme", this.config.theme);
+        this.html.setAttribute("data-layout-mode", this.config.layout.mode);
+        this.html.setAttribute("data-menu-color", this.config.menu.color);
+        this.html.setAttribute("data-topbar-color", this.config.topbar.color);
+        this.html.setAttribute("data-layout-position", this.config.layout.position);
+
+        if (this.config.nav === "vertical") {
+            this.sidenavSize = this.config.sidenav.size;
+            if (window.innerWidth <= 767) {
+                this.sidenavSize = "full";
+            } else if (767 <= window.innerWidth && window.innerWidth <= 1140 && this.sidenavSize !== "full" && this.sidenavSize !== "fullscreen") {
+                this.sidenavSize = "condensed";
+            }
+            this.html.setAttribute("data-sidenav-size", this.sidenavSize);
+            if (this.config.sidenav.user) {
+                this.html.setAttribute("data-sidenav-user", "true");
+            } else {
+                this.html.removeAttribute("data-sidenav-user");
             }
         }
     }
 
-    showProfileSidebar() {
-        this.state.profileSidebarVisible = !this.state.profileSidebarVisible;
-        if (this.state.profileSidebarVisible) {
-            this.overlayOpen.next(null);
+    onClickToggleMenu() {
+        if (window.innerWidth <= 767.98) {
+            this.html.classList.add("sidebar-enable");
+        } else {
+            this.sidenavSize = this.sidenavSize === 'default' ? 'condensed' : 'default';
+            this.html.setAttribute("data-sidenav-size", this.sidenavSize);
+            this.html.classList.add("sidebar-enable");
         }
     }
 
-    showConfigSidebar() {
-        this.state.configSidebarVisible = true;
-    }
-
-    isCondensed() {
-        return this.config().sidenav.size === 'condensed';
+    toggleRightSidebar(): void {
+        this.showRightSidebarSubject.next();
     }
 
     isDesktop() {
@@ -199,49 +300,5 @@ export class LayoutService {
 
     isMobile() {
         return !this.isDesktop();
-    }
-
-    onConfigUpdate() {
-        this._config = { ...this.config() };
-        this.configUpdate.next(this.config());
-    }
-
-    // changeTheme() {
-    //     const config = this.config();
-    //     const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
-    //     const themeLinkHref = themeLink.getAttribute('href')!;
-    //     const newHref = themeLinkHref
-    //         .split('/')
-    //         .map((el) =>
-    //             el == this._config.theme
-    //                 ? (el = config.theme)
-    //                 : el == `theme-${this._config.colorScheme}`
-    //                     ? (el = `theme-${config.colorScheme}`)
-    //                     : el
-    //         )
-    //         .join('/');
-
-    //     this.replaceThemeLink(newHref);
-    // }
-    replaceThemeLink(href: string) {
-        const id = 'theme-css';
-        let themeLink = <HTMLLinkElement>document.getElementById(id);
-        const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
-
-        cloneLinkElement.setAttribute('href', href);
-        cloneLinkElement.setAttribute('id', id + '-clone');
-
-        themeLink.parentNode!.insertBefore(
-            cloneLinkElement,
-            themeLink.nextSibling
-        );
-        cloneLinkElement.addEventListener('load', () => {
-            themeLink.remove();
-            cloneLinkElement.setAttribute('id', id);
-        });
-    }
-
-    changeScale(value: number) {
-        document.documentElement.style.fontSize = `${value}px`;
     }
 }

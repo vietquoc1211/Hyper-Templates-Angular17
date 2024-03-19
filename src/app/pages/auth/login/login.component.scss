@@ -1,0 +1,10 @@
+.bg-primary {
+    --ct-bg-opacity: 1;
+    background-color: rgba(var(--ct-primary-rgb), var(--ct-bg-opacity)) !important;
+}
+
+.authentication-bg {
+    background-image: url(../../../../assets/images/bg-pattern-light.svg);
+    background-size: cover;
+    background-position: center;
+}

@@ -34,7 +34,7 @@ export class AppComponent {
   constructor() {
     effect(() => {
       const state = getState(this.authStore);
-      console.log('auth state changed', state);
+      
     });
 
     this.primengConfig.ripple = true;

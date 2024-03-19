@@ -55,9 +55,8 @@ export class LoginComponent implements OnInit {
   }
 
   handleSubmit() {
-    console.log(this.loginForm)
     this.spinnerService.show();
-    this.toastService.showSuccess('Đang làm plan tiếp')
+    this.toastService.showSuccess('loading')
 
     if (!this.username || !this.password) {
       return;

@@ -43,7 +43,7 @@ export const AuthStore = signalStore(
                                     patchState(store, { userInfo: { ...response.data } })
                                 }
                             },
-                            error: console.error,
+                            error: (error) => console.error(error),
                             finalize: () => patchState(store, { isLoading: false })
                         })
                     );

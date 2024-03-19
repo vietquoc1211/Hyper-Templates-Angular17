@@ -19,9 +19,6 @@ export class HeaderComponent implements OnInit {
     this.docElement = document.documentElement;
 
   }
-  onShowHideMenu($event: any){
-
-  }
 
   fullScreen() {
     if (!this.isFullScreen) {
@@ -34,7 +31,7 @@ export class HeaderComponent implements OnInit {
   }
 
   showSettingTheme() {
-
+    this.layoutService.toggleRightSidebar();
   }
 
 }

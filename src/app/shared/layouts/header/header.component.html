@@ -26,7 +26,7 @@
             </div>
 
             <!-- Sidebar Menu Toggle Button -->
-            <button class="button-toggle-menu" (click)="layoutService.onMenuToggle()">
+            <button class="button-toggle-menu" (click)="layoutService.onClickToggleMenu()">
                 <i class="mdi mdi-menu"></i>
             </button>
 
@@ -331,7 +331,7 @@
             </li>
 
             <li class="d-none d-sm-inline-block">
-                <a class="nav-link" click="showSettingTheme()">
+                <a class="nav-link" (click)="showSettingTheme()">
                     <i class="ri-settings-3-line font-22"></i>
                 </a>
             </li>

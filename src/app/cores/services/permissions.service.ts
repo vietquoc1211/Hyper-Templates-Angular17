@@ -13,7 +13,6 @@ export class PermissionsService {
     constructor() { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        console.log(state)
         const token = this.cookieService.get(COOKIE_SERVICE_KEYS.TOKEN);
         if (!token) {
             sessionStorage.setItem(SessionStorageKey.RETURN_URL, state.url);

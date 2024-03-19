@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class LeftsideMenuComponent implements OnInit {
   dataMenu: any;  
-    el: any;
+  el: any;
 
   constructor(private http: HttpClient) {
     this.getJSON().subscribe(data => {
@@ -22,5 +22,10 @@ export class LeftsideMenuComponent implements OnInit {
 
   public getJSON(): Observable<any> {
     return this.http.get("./assets/json/leftside-menu.json");
+  }
+
+  closeMenu() {
+    this.el =  document.getElementsByTagName("html")[0];
+    this.el.classList.remove('sidebar-enable');
   }
 }
