@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 @Component({
-  selector: 'app-leftside-menu',
-  templateUrl: './leftside-menu.component.html'
+  selector: 'app-menu',
+  templateUrl: './app-menu.component.html'
 })
-export class LeftsideMenuComponent implements OnInit {
+
+export class AppMenuComponent implements OnInit {
   dataMenu: any;  
   el: any;
 
@@ -16,8 +17,8 @@ export class LeftsideMenuComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {
-  
+  ngOnInit() {
+      
   }
 
   public getJSON(): Observable<any> {

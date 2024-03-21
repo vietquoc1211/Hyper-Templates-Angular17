@@ -94,13 +94,15 @@ export class LayoutService {
                 user: false
             }
         };
+        // sessionStorage.setItem("__HYPER_CONFIG__", JSON.stringify(this.defaultConfig));
 
         effect(() => {
             this.getLayoutConfig();
         });
 
         signal(() => {
-            this._adjustLayout();
+            // this._adjustLayout();
+            // this.setSwitchFromConfig();
         });
         
         // resize event
@@ -120,12 +122,6 @@ export class LayoutService {
                 this.html.setAttribute("data-sidenav-size", this.sidenavSize); 
             }
         });
-    }
-    
-    initConfig(): void {
-        // this.defaultConfig = JSON.parse(JSON.stringify(window.defaultConfig));
-        // this.config = JSON.parse(JSON.stringify(window.config));
-        this.setSwitchFromConfig();
     }
     
     changeMenuColor(color: string): void {

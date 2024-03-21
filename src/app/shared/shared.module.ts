@@ -29,15 +29,13 @@ import { PageTitleBoxComponent } from "./layouts/components/page-title-box/page-
 import { TopSearchComponent } from "./layouts/components/top-search/top-search.component";
 import { FooterComponent } from "./layouts/footer/footer.component";
 import { HeaderComponent } from "./layouts/header/header.component";
-import { LeftsideMenuComponent } from "./layouts/leftside-menu/leftside-menu.component";
+import { AppMenuComponent } from "./layouts/app-menu/app-menu.component";
 import { RightSidebarComponent } from "./layouts/right-sidebar/right-sidebar.component";
-
 @NgModule({
     declarations: [
         AppMainComponent,
         FooterComponent,
         HeaderComponent,
-        LeftsideMenuComponent,
         RightSidebarComponent,
         HelpBoxComponent,
         LanguagesComponent,
@@ -47,7 +45,8 @@ import { RightSidebarComponent } from "./layouts/right-sidebar/right-sidebar.com
         AccountUserComponent,
         PageTitleBoxComponent,
         AppPaginatorComponent,
-        DateFormatPipe
+        DateFormatPipe,
+        AppMenuComponent
     ],
     imports: [
         CommonModule,

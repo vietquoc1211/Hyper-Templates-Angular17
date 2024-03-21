@@ -33,7 +33,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              
+              "src/assets/js/vendor.min.js"
             ],
             "allowedCommonJsDependencies": [
               "quill",
@@ -119,6 +119,7 @@
               "src/styles.scss"
             ],
             "scripts": [
+              "src/assets/js/vendor.min.js"
             ]
           }
         }
