@@ -9,7 +9,7 @@ export const routes: Routes = [
         component: AppMainComponent,
         children: [
             {
-                path: '',
+                path: 'dashboard',
                 loadChildren: () => import('./pages/dashboard/dashboard.module').then(mod => mod.DashboardModule),
                 data: {
                     title: 'title.dashboard'

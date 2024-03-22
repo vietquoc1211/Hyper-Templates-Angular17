@@ -63,14 +63,14 @@
                                                     <span>{{menu.pageTitle}}</span>
                                                     <span class="menu-arrow"></span>
                                                 </a>
-                                                <a *ngIf="menu.routerLink" data-bs-toggle="collapse" href="#{{menu.id}}" aria-expanded="false" class="side-nav-link" routerLink="{{menu.routerLink}}">
+                                                <a *ngIf="menu.routerLink" data-bs-toggle="collapse" href="#{{menu.id}}" aria-expanded="false" class="side-nav-link" [routerLink]="menu.routerLink">
                                                     <i class="{{menu.icon}}"></i>
                                                     <span>{{menu.pageTitle}}</span>
                                                 </a>
                                                 <div class="collapse" id="{{menu.id}}" routerLinkActive="show">
                                                     <ul class="side-nav-second-level" *ngFor="let subMenu of menu.subPages; let isub = index">
                                                         <li>
-                                                            <a routerLink="{{subMenu.routerLink}}" routerLinkActive="active"> {{subMenu.pageTitle}}</a>
+                                                            <a [routerLink]="subMenu.routerLink" routerLinkActive="active"> {{subMenu.pageTitle}}</a>
                                                         </li>
                                                     </ul>
                                                 </div>

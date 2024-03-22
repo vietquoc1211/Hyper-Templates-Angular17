@@ -282,7 +282,6 @@ export class LayoutService {
         } else {
             this.sidenavSize = this.sidenavSize === 'default' ? 'condensed' : 'default';
             this.html.setAttribute("data-sidenav-size", this.sidenavSize);
-            this.html.classList.add("sidebar-enable");
         }
     }
 

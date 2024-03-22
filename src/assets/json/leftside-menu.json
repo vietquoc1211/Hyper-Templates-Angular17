@@ -12,27 +12,27 @@
                     "subPages": [
                         {
                             "pageTitle": "Analytics",
-                            "routerLink": "/dashboards/analytics",
+                            "routerLink": "/dashboard/analytics",
                             "icon": ""
                         },
                         {
                             "pageTitle": "Ecommerce",
-                            "routerLink": "/dashboards/ecommerce",
+                            "routerLink": "/dashboard",
                             "icon": ""
                         },
                         {
                             "pageTitle": "Projects",
-                            "routerLink": "/dashboards/projects",
+                            "routerLink": "/dashboard/project",
                             "icon": ""
                         },
                         {
                             "pageTitle": "CRM",
-                            "routerLink": "/dashboards/CRM",
+                            "routerLink": "/dashboard/crm",
                             "icon": ""
                         },
                         {
                             "pageTitle": "E-Wallet",
-                            "routerLink": "/dashboards/e-wallet",
+                            "routerLink": "/dashboard/wallet",
                             "icon": ""
                         }
                     ]
