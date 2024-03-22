@@ -19,7 +19,7 @@
                             <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
                                 <div class="mb-3">
                                     <label for="{{usernameId}}" class="form-label">User Name</label>
-                                    <input class="form-control"  id="{{usernameId}}" type="text" 
+                                    <input pInputText class="form-control"  id="{{usernameId}}" type="text" 
                                             formControlName="username" 
                                             placeholder="Username"
                                             pInputText
@@ -35,7 +35,7 @@
                                     <a href="pages-recoverpw.html" class="text-muted float-end"><small>Forgot your password?</small></a>
                                     <label for="password" class="form-label">Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input type="password" id="{{passwordId}}" 
+                                        <input pInputText type="password" id="{{passwordId}}" 
                                         formControlName="password"  class="form-control" placeholder="Enter your password">
                                         <div class="input-group-text" data-password="false">
                                             <span class="password-eye"></span>
@@ -50,13 +50,13 @@
     
                                 <div class="mb-3 mb-3">
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="checkbox-signin" checked="">
+                                        <input pInputText type="checkbox" class="form-check-input" id="checkbox-signin" checked="">
                                         <label class="form-check-label" for="checkbox-signin">Remember me</label>
                                     </div>
                                 </div>
     
                                 <div class="mb-3 mb-0 text-center">
-                                    <button class="btn btn-primary" type="submit"> Log In </button>
+                                    <button pButton pRipple class="btn btn-primary" type="submit"> Log In </button>
                                 </div>
     
                             </form>

@@ -64,15 +64,6 @@ export class LayoutService {
     sidenavSizeAttribute: string | null = this.html.getAttribute("data-sidenav-size");
     sidenavUserAttribute: string | null = this.html.getAttribute("data-sidenav-user");
     menuColorAttribute: string | null = this.html.getAttribute("data-menu-color");    
-    
-    // state: LayoutState = {
-    //     staticMenuDesktopInactive: false,
-    //     overlayMenuActive: false,
-    //     profileSidebarVisible: false,
-    //     configSidebarVisible: false,
-    //     staticMenuMobileActive: false,
-    //     menuHoverActive: false,
-    // };
 
     constructor() {
         this.config = {} as AppConfig;
@@ -296,4 +287,9 @@ export class LayoutService {
     isMobile() {
         return !this.isDesktop();
     }
+
+    changeThemeMode(): void {
+        this.config.theme = this.config.theme === 'light' ? 'dark' : 'light';
+        this.html.setAttribute("data-bs-theme", this.config.theme);
+    } 
 }

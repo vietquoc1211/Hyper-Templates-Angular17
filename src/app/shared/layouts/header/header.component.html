@@ -31,13 +31,13 @@
             </button>
 
             <!-- Horizontal Menu Toggle Button -->
-            <button class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+            <!-- <button class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                 <div class="lines">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-            </button>
+            </button> -->
 
             <!-- Topbar Search Form -->
             <div class="app-search dropdown d-none d-lg-block">
@@ -338,7 +338,7 @@
 
             <li class="d-none d-sm-inline-block">
                 <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Theme Mode" data-bs-original-title="Theme Mode">
-                    <i class="ri-moon-line font-22"></i>
+                    <i class="ri-moon-line font-22" (click)="layoutService.changeThemeMode()"></i>
                 </div>
             </li>
 
