@@ -48,7 +48,7 @@ export const appConfig: ApplicationConfig = {
       CoreModule,
       SharedModule,
       TranslateModule.forRoot({
-        defaultLanguage: 'vi',
+        defaultLanguage: localStorage.getItem('locale') || 'vi',
         loader: {
           provide: TranslateLoader,
           useFactory: (createTranslateLoader),

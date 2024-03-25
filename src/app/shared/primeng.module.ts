@@ -41,6 +41,7 @@ import { EditorModule } from 'primeng/editor';
 import { ListboxModule } from 'primeng/listbox';
 import { PasswordModule } from 'primeng/password';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
     exports: [
@@ -84,7 +85,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
         EditorModule,
         ListboxModule,
         PasswordModule,
-        OverlayPanelModule
+        OverlayPanelModule,
+        SelectButtonModule
     ],
 })
 export class SharedPrimeNgModule { }

@@ -1,18 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
-
-// $gutter: 1rem; //for primeflex grid system
-// @import "assets/css/app-saas.min.cs";
-// @import "assets/css/app-dark.min.css";
-// @import "assets/css/icons.min.css";
-
-// // @import "assets/flag.css";
-
-// /* PrimeNG */
-@import "../node_modules/primeng/resources/primeng.min.css";
-@import "../node_modules/primeflex/primeflex.scss";
-@import "../node_modules/primeicons/primeicons.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 
 
+
+
+html {
+    font-size: calc(var(--ct-menu-item-font-size)* .98);
+}
+    
 /* General */
 $scale:14px;                    /* main font size */ 
 $borderRadius:12px;             /* border radius of layout element e.g. card, sidebar */ 
@@ -182,5 +177,22 @@ $transitionDuration:.2s;        /* transition duration of layout elements e.g. s
                 }
             }
         }
+    }
+}
+
+.language-container {
+    .p-dropdown {
+        border: none !important;
+    }
+    .p-dropdown:not(.p-disabled):hover {
+        border-color: none !important;
+    }
+    .p-dropdown:not(.p-disabled).p-focus {
+        box-shadow: none !important;
+        border-color: none !important;
+    }
+
+    .p-dropdown .p-dropdown-trigger {
+        width: 10px !important;
     }
 }

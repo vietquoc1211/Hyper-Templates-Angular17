@@ -1,6 +1,6 @@
 {
     "HELLO": "Xin chào {{value}}",
-    "textLoading": "Đang tải...",
+    "textLoading": "로드 중...",
     "title.dashboard": "DASHBOARD",
     "title.user": "QUẢN LÝ TÀI KHOẢN",
     "title.login": "ĐĂNG NHẬP",

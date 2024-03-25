@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-
 @Component({
     selector: 'app-dashboard-projects',
     templateUrl: './dashboard-projects.component.html',
@@ -8,4 +7,11 @@ import { Component } from "@angular/core";
 
 export class DashboardProjectComponent {
 
+    constructor() {
+
+    }
+
+    ngOnInit() {
+
+    }
 }
