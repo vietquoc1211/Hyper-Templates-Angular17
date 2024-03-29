@@ -1,41 +1,7 @@
-import { HostBinding, HostListener, Injectable, effect, signal } from '@angular/core';
+import { Injectable, effect, signal } from '@angular/core';
 import { Subject, fromEvent, throttleTime } from 'rxjs';
-
-interface LayoutConfig {
-    mode: string;
-    position: string;
-}
-
-interface TopbarConfig {
-    color: string;
-}
-
-interface MenuConfig {
-    color: string;
-}
-
-interface SidenavConfig {
-    size: string;
-    user: boolean;
-}
-
-interface AppConfig {
-    theme: string;
-    nav: string;
-    layout: LayoutConfig;
-    topbar: TopbarConfig;
-    menu: MenuConfig;
-    sidenav: SidenavConfig;
-}
-
-// interface LayoutState {
-//     staticMenuDesktopInactive: boolean;
-//     overlayMenuActive: boolean;
-//     profileSidebarVisible: boolean;
-//     configSidebarVisible: boolean;
-//     staticMenuMobileActive: boolean;
-//     menuHoverActive: boolean;
-// }
+import { AppConfig } from '../models';
+import { LocalStorageKey } from '../enums';
 
 @Injectable({
     providedIn: 'root',
@@ -55,7 +21,7 @@ export class LayoutService {
     html: HTMLElement = document.getElementsByTagName("html")[0];
     defaultConfig!: AppConfig;
     sidenavSize = 'default'; // initial value
-    storedConfig: string | null = sessionStorage.getItem("__HYPER_CONFIG__");
+    storedConfig!: string | null;
 
     layoutAttribute: string | null = this.html.getAttribute("data-layout");
     layoutModeAttribute: string | null = this.html.getAttribute("data-layout-mode");
@@ -85,15 +51,15 @@ export class LayoutService {
                 user: false
             }
         };
-        // sessionStorage.setItem("__HYPER_CONFIG__", JSON.stringify(this.defaultConfig));
+        // localStorage.setItem(LocalStorageKey.THEME_SETTING, JSON.stringify(this.defaultConfig));
 
         effect(() => {
             this.getLayoutConfig();
         });
 
         signal(() => {
-            // this._adjustLayout();
-            // this.setSwitchFromConfig();
+            this._adjustLayout();
+            this.setSwitchFromConfig();
         });
         
         // resize event
@@ -178,7 +144,7 @@ export class LayoutService {
     }
 
     setSwitchFromConfig(): void {
-        sessionStorage.setItem("__HYPER_CONFIG__", JSON.stringify(this.config));
+        localStorage.setItem(LocalStorageKey.THEME_SETTING, JSON.stringify(this.config));
         document.querySelectorAll(".right-bar input[type=checkbox]").forEach((e: Element) => {
             const inputElement = e as HTMLInputElement;
             inputElement.checked = false;
@@ -234,7 +200,7 @@ export class LayoutService {
     }
 
     getLayoutConfig() {
-
+        this.storedConfig = localStorage.getItem(LocalStorageKey.THEME_SETTING);
         this.config = this.storedConfig ? JSON.parse(this.storedConfig) : { ...this.defaultConfig };
 
         this.config.nav = this.layoutAttribute === "topnav" ? "horizontal" : "vertical";

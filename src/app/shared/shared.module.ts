@@ -30,13 +30,13 @@ import { TopSearchComponent } from "./layouts/components/top-search/top-search.c
 import { FooterComponent } from "./layouts/footer/footer.component";
 import { HeaderComponent } from "./layouts/header/header.component";
 import { AppMenuComponent } from "./layouts/app-menu/app-menu.component";
-import { RightSidebarComponent } from "./layouts/right-sidebar/right-sidebar.component";
+import { ThemeSettingComponent } from "./layouts/theme-setting/theme-setting.component";
 @NgModule({
     declarations: [
         AppMainComponent,
         FooterComponent,
         HeaderComponent,
-        RightSidebarComponent,
+        ThemeSettingComponent,
         HelpBoxComponent,
         LanguagesComponent,
         NotificationComponent,

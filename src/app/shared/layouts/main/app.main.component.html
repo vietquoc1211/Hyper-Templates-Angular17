@@ -1,26 +1,14 @@
 <div class="wrapper">
-    <!-- ========== Topbar Start ========== -->
     <app-header></app-header>
-    <!-- ========== Topbar End ========== -->
-    <!-- ========== Left Sidebar Start ========== -->
     <app-menu></app-menu>
-    <!-- ========== Left Sidebar End ========== -->
-    <!-- ============================================================== -->
-    <!-- Start Page Content here -->
-    <!-- ============================================================== -->
     <div class="content-page">
         <div class="content">
-            <!-- Start Content-->
             <div class="container-fluid">
                 <page-title-box></page-title-box>
                 <router-outlet></router-outlet>
             </div>
-            <!-- end Content-->
         </div>
-        <!-- Footer Start -->
         <app-footer></app-footer>
-        <!-- end Footer -->
     </div>
-    <!-- End Page content -->
-    <app-right-sidebar></app-right-sidebar>
+    <app-theme-setting></app-theme-setting>
 </div>

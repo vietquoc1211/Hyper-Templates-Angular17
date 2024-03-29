@@ -1,6 +1,7 @@
 export enum LocalStorageKey {
     'USER' = 'current_user',
     'LANGUAGE' = 'lang',
+    'THEME_SETTING' = '__THEME_SETTING__',
 }
 
 export enum SessionStorageKey {
