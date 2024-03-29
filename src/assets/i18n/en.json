@@ -3,13 +3,21 @@
     "textLoading": "Loading...",
     "login": "LOGIN WORKED",
     "title.dashboard": "DASHBOARD",
+    "title.dashboard-analytics": "Dashboard Analytics",
+    "title.dashboard-ecommerce": "Dashboard Ecommerce",
+    "title.dashboard-sales": "Dashboard Sales",
+    "title.dashboard-crm": "Dashboard CRM",
+    "title.dashboard-project": "Dashboard Project",
     "title.user": "USER MANAGEMENT",
     "title.login": "SIGN IN",
+    "subtitle.login": "Enter your email address and password to access admin panel.",
     "login.welcome": "Welcome, User",
     "login.signin": "Sign in to continue",
     "login.username": "Username",
     "login.password": "Password",
     "login.rememberMe": "Remember Me",
     "login.forgotPassword": "Forgot Password?",
-    "login.signinBtn": "SIGN IN"
+    "login.signinBtn": "Sign In",
+    "login.dontHaveAccount": "Create an account",
+    "login.signUpBtn": "Sign Up"
 }

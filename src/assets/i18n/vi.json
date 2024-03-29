@@ -1,9 +1,15 @@
 {
     "HELLO": "Xin chào {{value}}",
     "textLoading": "Đang tải...",
-    "title.dashboard": "DASHBOARD",
+    "title.dashboard": "Trang tổng quan",
+    "title.dashboard-analytics": "Phân tích trang tổng quan",
+    "title.dashboard-ecommerce": "Trang tổng quan thương mại điện tử",
+    "title.dashboard-sales": "Trang tổng quan bán hàng",
+    "title.dashboard-crm": "Trang tổng quan CRM",
+    "title.dashboard-project": "Trang tổng quan dự án",
     "title.user": "QUẢN LÝ TÀI KHOẢN",
     "title.login": "ĐĂNG NHẬP",
+    "subtitle.login": "Nhập địa chỉ email và mật khẩu của bạn để truy cập bảng quản trị.",
     "login": "TRANG ĐĂNG NHẬP",
     "login.welcome": "Xin chào, Kháng hàng",
     "login.signin": "Đăng nhập để tiếp tục",
@@ -11,5 +17,7 @@
     "login.password": "Mật khẩu",
     "login.rememberMe": "Nhớ tài khoản",
     "login.forgotPassword": "Quên mật khẩu?",
-    "login.signinBtn": "ĐĂNG NHẬP"
+    "login.signinBtn": "Đăng nhập",
+    "login.dontHaveAccount": "Chưa có tài khoản?",
+    "login.signUpBtn": "Đăng ký"
 }

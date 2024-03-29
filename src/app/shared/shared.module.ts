@@ -62,7 +62,8 @@ import { RightSidebarComponent } from "./layouts/right-sidebar/right-sidebar.com
         SharedPrimeNgModule,
         TranslateModule,
         AppPaginatorComponent,
-        DateFormatPipe
+        DateFormatPipe,
+        LanguagesComponent
     ],
     providers: [
         

@@ -9,17 +9,11 @@ import { LocalStorageKey } from '../../../enums';
 export class LanguagesComponent implements OnInit {
 
   languages: any[] | undefined;
-  // readonly translate = inject(TranslateService);
-
   selectedLanguage: any | undefined;
 
   constructor(public translate: TranslateService) {
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    translate.addLangs(['vi', 'en', 'kr']);
     translate.use(localStorage.getItem(LocalStorageKey.LANGUAGE) || 'vi');
-    translate.setDefaultLang('en');
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang ? browserLang : 'en');
   }
   
   ngOnInit() {
@@ -30,7 +24,7 @@ export class LanguagesComponent implements OnInit {
     ];
 
     this.selectedLanguage = this.languages.find(x => {
-      return x.code === (localStorage.getItem('locale') || 'vi');
+      return x.code === (localStorage.getItem(LocalStorageKey.LANGUAGE) || 'vi');
     });
   }
   
@@ -38,7 +32,7 @@ export class LanguagesComponent implements OnInit {
     if(!$event) {
       return;
     };
-    localStorage.setItem('locale', $event.value.code);
+    localStorage.setItem(LocalStorageKey.LANGUAGE, $event.value.code);
     this.translate.use($event.value.code);
   }
 }

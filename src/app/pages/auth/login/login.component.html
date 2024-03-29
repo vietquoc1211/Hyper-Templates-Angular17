@@ -10,15 +10,18 @@
                                 <span><img src="assets/images/logo.png" alt="logo" height="22"></span>
                             </a>
                         </div>
+                         <!-- languages -->
+                        <app-languages></app-languages>
+
                         <div class="card-body p-4">
                             <div class="text-center w-75 m-auto">
-                                <h4 class="text-dark-50 text-center pb-0 fw-bold">Sign In</h4>
-                                <p class="text-muted mb-4">Enter your email address and password to access admin panel.</p>
+                                <h4 class="text-dark-50 text-center pb-0 fw-bold">{{'title.login' | translate}}</h4>
+                                <p class="text-muted mb-4">{{'subtitle.login' | translate}}</p>
                             </div>
     
                             <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
                                 <div class="mb-3">
-                                    <label for="{{usernameId}}" class="form-label">User Name</label>
+                                    <label for="{{usernameId}}" class="form-label">{{'login.username' | translate}}</label>
                                     <input pInputText class="form-control"  id="{{usernameId}}" type="text" 
                                             formControlName="username" 
                                             placeholder="Username"
@@ -32,8 +35,8 @@
                                 </div>
     
                                 <div class="mb-3">
-                                    <a href="pages-recoverpw.html" class="text-muted float-end"><small>Forgot your password?</small></a>
-                                    <label for="password" class="form-label">Password</label>
+                                    <a href="pages-recoverpw.html" class="text-muted float-end"><small>{{'login.forgotPassword' | translate}}</small></a>
+                                    <label for="password" class="form-label">{{'login.password' | translate}}</label>
                                     <div class="input-group input-group-merge">
                                         <input pInputText type="password" id="{{passwordId}}" 
                                         formControlName="password"  class="form-control" placeholder="Enter your password">
@@ -50,13 +53,13 @@
     
                                 <div class="mb-3 mb-3">
                                     <div class="form-check">
-                                        <input pInputText type="checkbox" class="form-check-input" id="checkbox-signin" checked="">
-                                        <label class="form-check-label" for="checkbox-signin">Remember me</label>
+                                        <input type="checkbox" class="form-check-input" id="checkbox-signin" checked="">
+                                        <label class="form-check-label" for="checkbox-signin">{{'login.rememberMe' | translate}}</label>
                                     </div>
                                 </div>
     
                                 <div class="mb-3 mb-0 text-center">
-                                    <button pButton pRipple class="btn btn-primary" type="submit"> Log In </button>
+                                    <button pButton pRipple class="btn btn-primary" type="submit">{{'login.signinBtn' | translate}}</button>
                                 </div>
     
                             </form>
@@ -66,7 +69,11 @@
     
                     <div class="row mt-3">
                         <div class="col-12 text-center">
-                            <p class="text-muted">Don't have an account? <a href="pages-register.html" class="text-muted ms-1"><b>Sign Up</b></a></p>
+                            <p class="text-muted">{{'login.dontHaveAccount' | translate}}
+                                <a href="#" class="text-muted ms-1">
+                                    <b>{{'login.signUpBtn' | translate}}</b>
+                                </a>
+                            </p>
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->
