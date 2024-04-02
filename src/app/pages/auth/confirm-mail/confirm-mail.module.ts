@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
-import { LoginRoutingModule } from './login-routing.module';
-import { LoginComponent } from './login.component';
+import { ConfirmMailRoutingModule } from './confirm-mail-routing.module';
+import { ConfirmMailComponent } from './confirm-mail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         SharedModule,
         ReactiveFormsModule,
-        LoginRoutingModule
+        ConfirmMailRoutingModule
     ],
     exports: [
-        LoginComponent
+        ConfirmMailComponent
     ],
     declarations: [
-        LoginComponent
+        ConfirmMailComponent
     ],
     providers: [
     ],
 })
-export class LoginModule { }
+export class ConfirmMailModule { }

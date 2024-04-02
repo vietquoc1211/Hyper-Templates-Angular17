@@ -44,10 +44,10 @@
             "hideMenu": "0",
             "Pages": [
                 {
-                    "pageTitle": " Calender",
-                    "routerLink": "/calender",
+                    "pageTitle": " Calendar",
+                    "routerLink": "/calendar",
                     "icon": "uil-calender",
-                    "id":"calender"
+                    "id":"app-calendar"
                 },
                 {
                     "pageTitle": "Chat",
