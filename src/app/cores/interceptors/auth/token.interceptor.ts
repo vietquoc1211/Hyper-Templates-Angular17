@@ -21,7 +21,7 @@ export const TokenInterceptor: HttpInterceptorFn = (req, next) => {
     //Hanlde token is empty so redirect to login page
     if (!token) {
       authState.initialDefaultStates();
-      router.navigateByUrl('/login');
+      router.navigateByUrl('/auth/login');
       return next(req);
     }
 
@@ -31,7 +31,7 @@ export const TokenInterceptor: HttpInterceptorFn = (req, next) => {
     if (isExpired) {
       authService.logout();
       authState.initialDefaultStates();
-      router.navigateByUrl('/login');
+      router.navigateByUrl('/auth/login');
     }
     else {
       req = req.clone({
@@ -46,7 +46,7 @@ export const TokenInterceptor: HttpInterceptorFn = (req, next) => {
   } catch (error) {
     authService.logout();
     authState.initialDefaultStates();
-    router.navigateByUrl('/login');
+    router.navigateByUrl('/auth/login');
   }
   return next(req);
 };

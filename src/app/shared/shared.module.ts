@@ -8,7 +8,7 @@ import { AppMainComponent } from "./layouts/main/app.main.component";
 //Modules
 import { SharedPrimeNgModule } from "./primeng.module";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 
 //Service
@@ -38,7 +38,6 @@ import { ThemeSettingComponent } from "./layouts/theme-setting/theme-setting.com
         HeaderComponent,
         ThemeSettingComponent,
         HelpBoxComponent,
-        LanguagesComponent,
         NotificationComponent,
         BrandsComponent,
         TopSearchComponent,
@@ -46,14 +45,17 @@ import { ThemeSettingComponent } from "./layouts/theme-setting/theme-setting.com
         PageTitleBoxComponent,
         AppPaginatorComponent,
         DateFormatPipe,
-        AppMenuComponent
+        AppMenuComponent,
+        LanguagesComponent,
+
     ],
     imports: [
         CommonModule,
         RouterOutlet,
         FormsModule,
         SharedPrimeNgModule,
-        TranslateModule
+        TranslateModule,
+        ReactiveFormsModule
     ],
     exports: [
         CommonModule,
@@ -63,7 +65,9 @@ import { ThemeSettingComponent } from "./layouts/theme-setting/theme-setting.com
         TranslateModule,
         AppPaginatorComponent,
         DateFormatPipe,
-        LanguagesComponent
+        LanguagesComponent,
+        ReactiveFormsModule
+
     ],
     providers: [
         

@@ -50,10 +50,10 @@ export const routes: Routes = [
         canActivate: [canActivate]
     },
     {
-        path: 'login',
-        loadChildren: () => import('./pages/auth/login/login.module').then(mod => mod.LoginModule),
+        path: 'auth',
+        loadChildren: () => import('./pages/auth/auth.module').then(mod => mod.AuthModule),
         data: {
-            title: 'title.login'
+            title: 'title.auth'
         },
         resolve: {
             title: TitleTranslate

@@ -17,7 +17,7 @@ export class PermissionsService {
         if (!token) {
             sessionStorage.setItem(SessionStorageKey.RETURN_URL, state.url);
             this.authService.logout();
-            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+            this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
             return false;
         }
         return true;

@@ -6,11 +6,11 @@
                     <div class="card">
                         <!-- Logo -->
                         <div class="card-header py-4 text-center bg-primary">
-                            <a href="">
-                                <span><img src="assets/images/logo.png" alt="logo" height="22"></span>
+                            <a routerLink="/auth/login">
+                                <img src="assets/images/logo.png" alt="logo" height="22">
                             </a>
                         </div>
-                         <!-- languages -->
+                        <!-- languages -->
                         <!-- <app-languages></app-languages> -->
 
                         <div class="card-body p-4">
@@ -18,66 +18,64 @@
                                 <h4 class="text-dark-50 text-center pb-0 fw-bold">{{'title.login' | translate}}</h4>
                                 <p class="text-muted mb-4">{{'subtitle.login' | translate}}</p>
                             </div>
-    
+
                             <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
                                 <div class="mb-3">
-                                    <label for="{{usernameId}}" class="form-label">{{'login.username' | translate}}</label>
-                                    <input pInputText class="form-control"  id="{{usernameId}}" type="text" 
-                                            formControlName="username" 
-                                            placeholder="Username"
-                                            pInputText
-                                    />
+                                    <label for="{{usernameId}}" class="form-label">{{'login.username' |
+                                        translate}}</label>
+                                    <input pInputText class="form-control" id="{{usernameId}}" type="text"
+                                        formControlName="username" placeholder="Username" pInputText />
                                     @if (username?.invalid && username?.touched) {
-                                        @if (username?.errors?.['required']) {
-                                            <span class="text-red-500">Please input username</span>
-                                        }
+                                    @if (username?.errors?.['required']) {
+                                    <span class="text-red-500">Please input username</span>
+                                    }
                                     }
                                 </div>
-    
+
                                 <div class="mb-3">
-                                    <a href="pages-recoverpw.html" class="text-muted float-end"><small>{{'login.forgotPassword' | translate}}</small></a>
+                                    <a routerLink="/recoverpw" class="text-muted float-end"><small>{{'login.forgotPassword' | translate}}</small></a>
                                     <label for="password" class="form-label">{{'login.password' | translate}}</label>
                                     <div class="input-group input-group-merge">
-                                        <input pInputText type="password" id="{{passwordId}}" 
-                                        formControlName="password"  class="form-control" placeholder="Enter your password">
+                                        <input pInputText type="password" id="{{passwordId}}" formControlName="password"
+                                            class="form-control" placeholder="Enter your password">
                                         <div class="input-group-text" data-password="false">
                                             <span class="password-eye"></span>
                                         </div>
                                         @if (password?.invalid && password?.touched) {
-                                            @if (password?.errors?.['required']) {
-                                                <span class="text-red-500">Please input password</span>
-                                            }
+                                        @if (password?.errors?.['required']) {
+                                        <span class="text-red-500">Please input password</span>
+                                        }
                                         }
                                     </div>
                                 </div>
-    
+
                                 <div class="mb-3 mb-3">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="checkbox-signin" checked="">
                                         <label class="form-check-label" for="checkbox-signin">{{'login.rememberMe' | translate}}</label>
                                     </div>
                                 </div>
-    
+
                                 <div class="mb-3 mb-0 text-center">
                                     <button pButton pRipple class="btn btn-primary" type="submit">{{'login.signinBtn' | translate}}</button>
                                 </div>
-    
+
                             </form>
                         </div> <!-- end card-body -->
                     </div>
                     <!-- end card -->
-    
+
                     <div class="row mt-3">
                         <div class="col-12 text-center">
                             <p class="text-muted">{{'login.dontHaveAccount' | translate}}
-                                <a href="#" class="text-muted ms-1">
+                                <a routerLink="/register" class="text-muted ms-1">
                                     <b>{{'login.signUpBtn' | translate}}</b>
                                 </a>
                             </p>
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->
-    
+
                 </div> <!-- end col -->
             </div>
             <!-- end row -->

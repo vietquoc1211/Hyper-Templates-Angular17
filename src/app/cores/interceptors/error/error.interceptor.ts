@@ -15,7 +15,7 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
         // auto logout if 401 or 403 response returned from api
         authService.logout();
         authStates.initialDefaultStates();
-        router.navigateByUrl('/login');
+        router.navigateByUrl('/auth/login');
     }
 
     const error = (err && err.error && err.error.message) || err.statusText;

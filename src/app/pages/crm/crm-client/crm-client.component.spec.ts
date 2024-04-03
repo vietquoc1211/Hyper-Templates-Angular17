@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CalendarComponent } from './calendar.component';
+import { CrmClientComponent } from './crm-client.component';
 
-describe('CalendarComponent', () => {
-  let component: CalendarComponent;
-  let fixture: ComponentFixture<CalendarComponent>;
+describe('CrmClientComponent', () => {
+  let component: CrmClientComponent;
+  let fixture: ComponentFixture<CrmClientComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CalendarComponent]
+      imports: [CrmClientComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CalendarComponent);
+    fixture = TestBed.createComponent(CrmClientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
