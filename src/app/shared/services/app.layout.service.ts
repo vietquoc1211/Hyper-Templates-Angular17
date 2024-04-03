@@ -17,9 +17,29 @@ export class LayoutService {
     overlayOpen$ = this.overlayOpen.asObservable();
     showRightSidebar$ = this.showRightSidebarSubject.asObservable();
 
-    config: AppConfig;
+    _config = {
+        theme: "light",
+        nav: "vertical",
+        layout: {
+            mode: "fluid",
+            position: "fixed"
+        },
+        topbar: {
+            color: "light"
+        },
+        menu: {
+            color: "dark"
+        },
+        sidenav: {
+            size: "default",
+            user: false
+        }
+    };
+
+    config = signal<AppConfig>(this._config);
+
     html: HTMLElement = document.getElementsByTagName("html")[0];
-    defaultConfig!: AppConfig;
+    
     sidenavSize = 'default'; // initial value
     storedConfig!: string | null;
 
@@ -32,36 +52,17 @@ export class LayoutService {
     menuColorAttribute: string | null = this.html.getAttribute("data-menu-color");    
 
     constructor() {
-        this.config = {} as AppConfig;
-        this.defaultConfig = {
-            theme: "light",
-            nav: "vertical",
-            layout: {
-                mode: "fluid",
-                position: "fixed"
-            },
-            topbar: {
-                color: "light"
-            },
-            menu: {
-                color: "dark"
-            },
-            sidenav: {
-                size: "default",
-                user: false
-            }
-        };
-        // localStorage.setItem(LocalStorageKey.THEME_SETTING, JSON.stringify(this.defaultConfig));
-
         effect(() => {
+            const config = this.config();
+            if (this.updateStyle(config)) {
+                this.changeTheme();
+            }
             this.getLayoutConfig();
         });
+        this.resizeEvent();
+    }
 
-        signal(() => {
-            this._adjustLayout();
-            this.setSwitchFromConfig();
-        });
-        
+    resizeEvent() {
         // resize event
         fromEvent(window, 'resize').pipe(
             throttleTime(200) // optional, limits the number of events per 200ms
@@ -80,152 +81,40 @@ export class LayoutService {
             }
         });
     }
-    
-    changeMenuColor(color: string): void {
-        this.config.menu.color = color;
-        this.html.setAttribute("data-menu-color", color);
-        this.setSwitchFromConfig();
-    }
 
-    changeLeftbarSize(size: string, updateConfig: boolean = true): void {
-        this.html.setAttribute("data-sidenav-size", size);
-        if (updateConfig) {
-            this.config.sidenav.size = size;
-            this.setSwitchFromConfig();
-        }
-    }
-
-    changeLayoutMode(mode: string, updateConfig: boolean = true): void {
-        this.html.setAttribute("data-layout-mode", mode);
-        if (updateConfig) {
-            this.config.layout.mode = mode;
-            this.setSwitchFromConfig();
-        }
-    }
-
-    changeLayoutPosition(position: string): void {
-        this.config.layout.position = position;
-        this.html.setAttribute("data-layout-position", position);
-        this.setSwitchFromConfig();
-    }
-
-    changeLayoutColor(color: string): void {
-        this.config.theme = color;
-        this.html.setAttribute("data-bs-theme", color);
-        this.setSwitchFromConfig();
-    }
-
-    changeTopbarColor(color: string): void {
-        this.config.topbar.color = color;
-        this.html.setAttribute("data-topbar-color", color);
-        this.setSwitchFromConfig();
-    }
-
-    changeSidebarUser(user: boolean): void {
-        this.config.sidenav.user = user;
-        if (user) {
-            this.html.setAttribute("data-sidenav-user", user.toString());
-        } else {
-            this.html.removeAttribute("data-sidenav-user");
-        }
-        this.setSwitchFromConfig();
-    }
-
-    resetTheme(): void {
-        // this.config = JSON.parse(JSON.stringify(window.defaultConfig));
-        this.changeMenuColor(this.config.menu.color);
-        this.changeLeftbarSize(this.config.sidenav.size);
-        this.changeLayoutColor(this.config.theme);
-        this.changeLayoutMode(this.config.layout.mode);
-        this.changeLayoutPosition(this.config.layout.position);
-        this.changeTopbarColor(this.config.topbar.color);
-        this.changeSidebarUser(this.config.sidenav.user);
-        this._adjustLayout();
-    }
-
-    setSwitchFromConfig(): void {
-        localStorage.setItem(LocalStorageKey.THEME_SETTING, JSON.stringify(this.config));
-        document.querySelectorAll(".right-bar input[type=checkbox]").forEach((e: Element) => {
-            const inputElement = e as HTMLInputElement;
-            inputElement.checked = false;
-        });
-    
-        let e: HTMLInputElement | null, 
-            t: HTMLInputElement | null, 
-            n: HTMLInputElement | null, 
-            a: HTMLInputElement | null, 
-            o: HTMLInputElement | null, 
-            r: HTMLInputElement | null, 
-            i: HTMLInputElement | null, 
-            c: HTMLInputElement | null;
-    
-        const s = this.config;
-    
-        if (s) {
-            e = document.querySelector(`input[type=radio][name=data-layout][value=${s.nav}]`);
-            t = document.querySelector(`input[type=radio][name=data-bs-theme][value=${s.theme}]`);
-            n = document.querySelector(`input[type=radio][name=data-layout-mode][value=${s.layout.mode}]`);
-            a = document.querySelector(`input[type=radio][name=data-topbar-color][value=${s.topbar.color}]`);
-            o = document.querySelector(`input[type=radio][name=data-menu-color][value=${s.menu.color}]`);
-            r = document.querySelector(`input[type=radio][name=data-sidenav-size][value=${s.sidenav.size}]`);
-            i = document.querySelector(`input[type=radio][name=data-layout-position][value=${s.layout.position}]`);
-            c = document.querySelector(`input[type=checkbox][name=sidebar-user]`);
-    
-            if (e) e.checked = true;
-            if (t) t.checked = true;
-            if (n) n.checked = true;
-            if (a) a.checked = true;
-            if (o) o.checked = true;
-            if (r) r.checked = true;
-            if (i) i.checked = true;
-            if (c && s.sidenav.user.toString() === "true") c.checked = true;
-        }
-    }
-
-    _adjustLayout(): void {
-        if (window.innerWidth <= 767.98) {
-            this.changeLeftbarSize("full", false);
-        } else if (window.innerWidth >= 767 && window.innerWidth <= 1140) {
-            if (this.config.sidenav.size !== "full" && this.config.sidenav.size !== "fullscreen") {
-                if (this.config.sidenav.size === "sm-hover") {
-                    this.changeLeftbarSize("condensed");
-                } else {
-                    this.changeLeftbarSize("condensed", false);
-                }
-            }
-        } else {
-            this.changeLeftbarSize(this.config.sidenav.size);
-            this.changeLayoutMode(this.config.layout.mode);
-        }
+    updateStyle(config: AppConfig) {
+        return (
+            config.theme !== this._config.theme
+        );
     }
 
     getLayoutConfig() {
         this.storedConfig = localStorage.getItem(LocalStorageKey.THEME_SETTING);
-        this.config = this.storedConfig ? JSON.parse(this.storedConfig) : { ...this.defaultConfig };
+        this._config = this.storedConfig ? JSON.parse(this.storedConfig) : { ...this._config };
 
-        this.config.nav = this.layoutAttribute === "topnav" ? "horizontal" : "vertical";
-        this.config.layout.mode = this.layoutModeAttribute || this.defaultConfig.layout.mode;
-        this.config.layout.position = this.layoutPositionAttribute || this.defaultConfig.layout.position;
-        this.config.topbar.color = this.topbarColorAttribute || this.defaultConfig.topbar.color;
-        this.config.sidenav.size = this.sidenavSizeAttribute || this.defaultConfig.sidenav.size;
-        this.config.sidenav.user = this.sidenavUserAttribute ? this.sidenavUserAttribute === "true" : this.defaultConfig.sidenav.user;
-        this.config.menu.color = this.menuColorAttribute || this.defaultConfig.menu.color;
+        this._config.nav = this.layoutAttribute === "topnav" ? "horizontal" : "vertical";
+        this._config.layout.mode = this.layoutModeAttribute || this._config.layout.mode;
+        this._config.layout.position = this.layoutPositionAttribute || this._config.layout.position;
+        this._config.topbar.color = this.topbarColorAttribute || this._config.topbar.color;
+        this._config.sidenav.size = this.sidenavSizeAttribute || this._config.sidenav.size;
+        this._config.sidenav.user = this.sidenavUserAttribute ? this.sidenavUserAttribute === "true" : this._config.sidenav.user;
+        this._config.menu.color = this.menuColorAttribute || this._config.menu.color;
 
-        this.html.setAttribute("data-bs-theme", this.config.theme);
-        this.html.setAttribute("data-layout-mode", this.config.layout.mode);
-        this.html.setAttribute("data-menu-color", this.config.menu.color);
-        this.html.setAttribute("data-topbar-color", this.config.topbar.color);
-        this.html.setAttribute("data-layout-position", this.config.layout.position);
+        this.html.setAttribute("data-bs-theme", this._config.theme);
+        this.html.setAttribute("data-layout-mode", this._config.layout.mode);
+        this.html.setAttribute("data-menu-color", this._config.menu.color);
+        this.html.setAttribute("data-topbar-color", this._config.topbar.color);
+        this.html.setAttribute("data-layout-position", this._config.layout.position);
 
-        if (this.config.nav === "vertical") {
-            this.sidenavSize = this.config.sidenav.size;
+        if (this._config.nav === "vertical") {
+            this.sidenavSize = this._config.sidenav.size;
             if (window.innerWidth <= 767) {
                 this.sidenavSize = "full";
             } else if (767 <= window.innerWidth && window.innerWidth <= 1140 && this.sidenavSize !== "full" && this.sidenavSize !== "fullscreen") {
                 this.sidenavSize = "condensed";
             }
             this.html.setAttribute("data-sidenav-size", this.sidenavSize);
-            if (this.config.sidenav.user) {
+            if (this._config.sidenav.user) {
                 this.html.setAttribute("data-sidenav-user", "true");
             } else {
                 this.html.removeAttribute("data-sidenav-user");
@@ -254,8 +143,31 @@ export class LayoutService {
         return !this.isDesktop();
     }
 
-    changeThemeMode(): void {
-        this.config.theme = this.config.theme === 'light' ? 'dark' : 'light';
-        this.html.setAttribute("data-bs-theme", this.config.theme);
-    } 
+
+
+    changeTheme() {
+        const config = this.config();
+        const newHref = "assets/css/theme/"+config.theme+"-mode.scss";
+        this.replaceThemeLink(newHref);
+    }
+
+    replaceThemeLink(href: string) {
+        const id = 'theme-css';
+        let themeLink = <HTMLLinkElement>document.getElementById(id);
+        const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
+
+        cloneLinkElement.setAttribute('href', href);
+        cloneLinkElement.setAttribute('id', id + '-clone');
+
+        themeLink.parentNode!.insertBefore(
+            cloneLinkElement,
+            themeLink.nextSibling
+        );
+        cloneLinkElement.addEventListener('load', () => {
+            themeLink.remove();
+            cloneLinkElement.setAttribute('id', id);
+            this.html.setAttribute("data-bs-theme", this.config().theme);
+        });
+    }
+
 }

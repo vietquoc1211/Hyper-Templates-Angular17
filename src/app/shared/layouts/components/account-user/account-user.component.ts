@@ -20,6 +20,6 @@ export class AccountUserComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.authStates.initialDefaultStates();
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/auth/logout');
   }
 }

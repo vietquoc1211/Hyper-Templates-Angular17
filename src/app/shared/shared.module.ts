@@ -31,6 +31,7 @@ import { FooterComponent } from "./layouts/footer/footer.component";
 import { HeaderComponent } from "./layouts/header/header.component";
 import { AppMenuComponent } from "./layouts/app-menu/app-menu.component";
 import { ThemeSettingComponent } from "./layouts/theme-setting/theme-setting.component";
+
 @NgModule({
     declarations: [
         AppMainComponent,
@@ -46,8 +47,7 @@ import { ThemeSettingComponent } from "./layouts/theme-setting/theme-setting.com
         AppPaginatorComponent,
         DateFormatPipe,
         AppMenuComponent,
-        LanguagesComponent,
-
+        LanguagesComponent
     ],
     imports: [
         CommonModule,

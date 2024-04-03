@@ -22,7 +22,7 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-check card-radio">
-                                                <input id="customizer-layout01" name="data-layout" type="radio" [(ngModel)]="layoutService.config.nav"
+                                                <input id="customizer-layout01" name="data-layout" type="radio" [(ngModel)]="nav"
                                                     value="vertical" class="form-check-input">
                                                 <label class="form-check-label p-0 avatar-md w-100"
                                                     for="customizer-layout01">
@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="form-check card-radio">
-                                                <input id="customizer-layout02" name="data-layout" type="radio" [(ngModel)]="layoutService.config.nav"
+                                                <input id="customizer-layout02" name="data-layout" type="radio" [(ngModel)]="nav"
                                                     value="horizontal" class="form-check-input">
                                                 <label class="form-check-label p-0 avatar-md w-100"
                                                     for="customizer-layout02">
@@ -86,8 +86,8 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-check card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.theme"
-                                                        id="layout-color-light" value="light">
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="theme"
+                                                        id="layout-color-light" value="light" (click)="changeTheme('light')">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="layout-color-light">
                                                         <div id="sidebar-size">
@@ -144,8 +144,8 @@
 
                                             <div class="col-4">
                                                 <div class="form-check card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.theme"
-                                                        id="layout-color-dark" value="dark">
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="theme"
+                                                        id="layout-color-dark" value="dark" (click)="changeTheme('dark')">
                                                     <label class="form-check-label p-0 avatar-md w-100 bg-black"
                                                         for="layout-color-dark">
                                                         <div id="sidebar-size">
@@ -204,7 +204,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-check card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.layout.mode"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="mode"
                                                         id="layout-mode-fluid" value="fluid">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="layout-mode-fluid">
@@ -257,7 +257,7 @@
                                             </div>
                                             <div class="col-4" id="layout-boxed">
                                                 <div class="form-check card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.layout.mode"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="mode"
                                                         id="layout-mode-boxed" value="boxed">
                                                     <label class="form-check-label p-0 avatar-md w-100 px-2"
                                                         for="layout-mode-boxed">
@@ -311,7 +311,7 @@
 
                                             <div class="col-4" id="layout-detached">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.layout.mode"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="mode"
                                                         id="data-layout-detached" value="detached">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="data-layout-detached">
@@ -357,7 +357,7 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-check card-radio">
-                                                <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.topbar.color"
+                                                <input class="form-check-input" type="radio" [(ngModel)]="topbarColor"
                                                     id="topbar-color-light" value="light">
                                                 <label class="form-check-label p-0 avatar-md w-100"
                                                     for="topbar-color-light">
@@ -411,7 +411,7 @@
 
                                         <div class="col-4" style="--ct-dark-rgb: 64,73,84;">
                                             <div class="form-check card-radio">
-                                                <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.topbar.color"
+                                                <input class="form-check-input" type="radio" [(ngModel)]="topbarColor"
                                                     id="topbar-color-dark" value="dark">
                                                 <label class="form-check-label p-0 avatar-md w-100"
                                                     for="topbar-color-dark">
@@ -465,7 +465,7 @@
 
                                         <div class="col-4">
                                             <div class="form-check card-radio">
-                                                <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.topbar.color"
+                                                <input class="form-check-input" type="radio" [(ngModel)]="topbarColor"
                                                     id="topbar-color-brand" value="brand">
                                                 <label class="form-check-label p-0 avatar-md w-100"
                                                     for="topbar-color-brand">
@@ -525,7 +525,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.menu.color"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="menuColor"
                                                         id="leftbar-color-light" value="light">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-color-light">
@@ -579,7 +579,7 @@
 
                                             <div class="col-4" style="--ct-dark-rgb: 64,73,84;">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.menu.color"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="menuColor"
                                                         id="leftbar-color-dark" value="dark">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-color-dark">
@@ -632,7 +632,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.menu.color"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="menuColor"
                                                         id="leftbar-color-brand" value="brand">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-color-brand">
@@ -693,7 +693,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.sidenav.size"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="sidenavSize"
                                                         id="leftbar-size-default" value="default">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-size-default">
@@ -726,7 +726,7 @@
 
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.sidenav.size"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="sidenavSize"
                                                         id="leftbar-size-compact" value="compact">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-size-compact">
@@ -759,7 +759,7 @@
 
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.sidenav.size"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="sidenavSize"
                                                          id="leftbar-size-small" value="condensed">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-size-small">
@@ -793,7 +793,7 @@
 
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.sidenav.size"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="sidenavSize"
                                                         id="leftbar-size-small-hover" value="sm-hover">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-size-small-hover">
@@ -827,7 +827,7 @@
 
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.sidenav.size"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="sidenavSize"
                                                         id="leftbar-size-full" value="full">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-size-full">
@@ -851,7 +851,7 @@
 
                                             <div class="col-4">
                                                 <div class="form-check sidebar-setting card-radio">
-                                                    <input class="form-check-input" type="radio" [(ngModel)]="layoutService.config.sidenav.size"
+                                                    <input class="form-check-input" type="radio" [(ngModel)]="sidenavSize"
                                                        id="leftbar-size-fullscreen" value="fullscreen">
                                                     <label class="form-check-label p-0 avatar-md w-100"
                                                         for="leftbar-size-fullscreen">
@@ -869,7 +869,7 @@
                                         </div>
                                     </div>
 
-                                    <div id="layout-position">
+                                    <!-- <div id="layout-position">
                                         <h5 class="my-3 font-16 fw-bold">Layout Position</h5>
 
                                         <div class="btn-group radio" role="group">
@@ -883,9 +883,9 @@
                                             <label class="btn btn-soft-primary w-sm ms-0"
                                                 for="layout-position-scrollable">Scrollable</label>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                    <div id="sidebar-user">
+                                    <!-- <div id="sidebar-user">
                                         <div class="d-flex justify-content-between align-items-center mt-3">
                                             <label class="font-16 fw-bold m-0" for="sidebaruser-check">Sidebar User Info</label>
                                             <div class="form-check form-switch">
@@ -893,7 +893,7 @@
                                                     id="sidebaruser-check">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                 </div>
                             </div>
