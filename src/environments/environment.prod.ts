@@ -1,10 +1,8 @@
 export const environment = {
     production: true,
     apiConfig: {
-        domain: "https://api.Hyper.lotte.vn/",
-        domainSocket: "https://api.Hyper.lotte.vn/ws/",
-        AWS: {
-            S3Domain: 'https://d1d3hv1jkb9o8s.cloudfront.net/'
-        }
+        domain: "http://103.225.237.73:7138/",
+        chatApiUrl: "http://localhost:5005/",
+        hubUrl: "http://localhost:5065/hubs/"
     }
 };

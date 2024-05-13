@@ -11,6 +11,6 @@ export class CommonService {
 
     public async getTextTranslate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const text: string = await lastValueFrom(this.translateService.get(route.data['title']));
-        return text ? `Hyper | ${text} | Global IT Outsourcing Services` : 'Hyper | Global IT Outsourcing Services';
+        return text ? `Hyper | ${text} | Angular 17` : 'Hyper | Angular 17';
     }
 }

@@ -3,8 +3,8 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { debounceTime, distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
 import { inject } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
-import { UserType } from '../../../pages/user/models/user.model';
-import { UserService } from '../../../pages/user/services/user.service';
+import { UserType } from '../../../pages/system/models/user.model';
+import { UserService } from '../../../pages/system/services/user.service';
 import { BaseModel } from '../../../shared/models';
 
 type UserState = {

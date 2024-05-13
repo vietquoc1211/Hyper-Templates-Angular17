@@ -25,10 +25,10 @@ export const routes: Routes = [
                 title: TitleTranslate
             },
             {
-                path: 'user',
-                loadChildren: () => import('./pages/user/user.module').then(mod => mod.UserModule),
+                path: 'system',
+                loadChildren: () => import('./pages/system/system.module').then(mod => mod.SystemModule),
                 data: {
-                    title: 'title.user'
+                    title: 'title.system'
                 },
                 resolve: {
                     title: TitleTranslate
@@ -51,6 +51,28 @@ export const routes: Routes = [
                 component: ChatComponent,
                 data: {
                     title: 'title.chat'
+                },
+                resolve: {
+                    title: TitleTranslate
+                },
+                title: TitleTranslate
+            },
+            {
+                path: 'crm',
+                loadChildren: () => import('./pages/crm/crm.module').then(mod => mod.CRMModule),
+                data: {
+                    title: 'title.crm'
+                },
+                resolve: {
+                    title: TitleTranslate
+                },
+                title: TitleTranslate
+            },
+            {
+                path: 'ecommerce',
+                loadChildren: () => import('./pages/ecommerce/ecommerce.module').then(mod => mod.EcommerceModule),
+                data: {
+                    title: 'title.ecommerce'
                 },
                 resolve: {
                     title: TitleTranslate
