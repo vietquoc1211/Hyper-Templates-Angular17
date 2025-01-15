@@ -1,9 +1,7 @@
+
 export const environment = {
     production: false,
-    develop: true,
-    apiConfig: {
-        domain: "http://103.225.237.73:7111/",
-        chatApiUrl: "http://localhost:5005/",
-        hubUrl: "http://localhost:5065/hubs/"
-    }
+    apiUrl: 'http://localhost:5064/api/',
+    hubUrl: "http://localhost:5064/hubs/",
+    chatApiUrl: "http://localhost:5064/api/chat/" 
 };

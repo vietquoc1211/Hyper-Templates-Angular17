@@ -3,11 +3,11 @@ import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { AuthStore } from '../../stores/actions';
+import { AuthDataStore } from '../../stores/actions';
 
 export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const authStates = inject(AuthStore);
+  const authStates = inject(AuthDataStore);
   const router = inject(Router);
 
   return next(req).pipe(catchError((err: any) => {

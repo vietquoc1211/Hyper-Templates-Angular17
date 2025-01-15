@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SystemComponent } from './system.component';
-import { UserListComponent } from './components/users-list/user-list.component';
-
-const routes: Routes = [
-    { path: '', component: SystemComponent },
-    { path: 'user-list', component: UserListComponent }
-];
+import { RouterModule } from '@angular/router';
+import { RolePermissionComponent } from './components/role-permission/role-permission.component';
+import { TitleTranslate } from '../../cores/helpers';
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild([
+        {
+            path: 'role-permission',
+            component: RolePermissionComponent,
+            data: {
+                title: 'tabs.systems.role&permission'
+            },
+            resolve: {
+                title: TitleTranslate
+            },
+            title: TitleTranslate,
+        }
+    ])],
     exports: [RouterModule]
 })
 export class SystemRoutingModule { }

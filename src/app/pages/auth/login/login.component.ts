@@ -1,32 +1,24 @@
 import { Component, OnInit, effect, inject } from '@angular/core';
 import { getState } from '@ngrx/signals';
-import { AuthStore } from '../../../cores/stores/actions';
+import { AuthDataStore, AuthState } from '../../../cores/stores/actions';
 import { Router } from '@angular/router';
-import { COOKIE_SERVICE_KEYS, SessionStorageKey } from '../../../shared/enums';
+import {  CookieNames, LocalStorageKey } from '../../../shared/enums';
 import { LayoutService } from '../../../shared/services/app.layout.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CookieService } from 'ngx-cookie-service';
-import { makeId } from '../../../cores/helpers/index';
-import { ToastService } from '../../../cores/services';
+import { AuthService, ToastService } from '../../../cores/services';
+import { ValidateInputStatus } from '../../../shared/models';
+import { emailRegex } from '../../../shared/constants';
 
 @Component({
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  styles: [`
-        :host ::ng-deep .pi-eye,
-        :host ::ng-deep .pi-eye-slash {
-            transform:scale(1.6);
-            margin-right: 1rem;
-            color: var(--primary-color) !important;
-        }
-    `
-  ]
 })
 export class LoginComponent implements OnInit {
-  readonly authStore = inject(AuthStore);
+  readonly authStore = inject(AuthDataStore);
   readonly router = inject(Router);
   readonly layoutService = inject(LayoutService);
   readonly spinnerService = inject(NgxSpinnerService);
@@ -35,48 +27,67 @@ export class LoginComponent implements OnInit {
 
   valCheck: string[] = ['remember'];
   loginForm!: FormGroup;
-  usernameId: string = makeId(10);
-  passwordId: string = makeId(10);
+  authState!: AuthState;
+  username!: string;
+  password!: string;
+  remember: boolean = false;
+  invalidStatus: ValidateInputStatus = new ValidateInputStatus();
 
-  constructor() {
+  constructor(private readonly auth: AuthService) {
     effect(() => {
-      const state = getState(this.authStore);
-      if (state.token) this.router.navigateByUrl(sessionStorage.getItem(SessionStorageKey.RETURN_URL) as string)
-    });
-
-    this.loginForm = new FormGroup({
-      username: new FormControl('vietbui', [Validators.required]),
-      password: new FormControl('123456', Validators.required),
-    });
+        this.authState = getState(this.authStore);
+    })
   }
 
   ngOnInit(): void {
+    this.cookieService.delete(CookieNames.SESSIONID);
 
-  }
-
-  handleSubmit() {
-    this.spinnerService.show();
-    this.toastService.showSuccess('loading')
-
-    if (!this.username || !this.password) {
-      return;
+    if (localStorage.getItem(LocalStorageKey.REMEMBER)) {
+        const email = localStorage.getItem(LocalStorageKey.EMAIL);
+        this.username = email ?? "";
+        this.remember = true;
     }
 
-    setTimeout(() => {
-      this.spinnerService.hide();
-      const tokenStr = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MDY0OTczOTQsImV4cCI6MTczODAzMzM5OCwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.e_qUyE_V2h1QOX90MD6dpGQ-xIx2yuUv69f5xvw0THI";
-      this.spinnerService.hide();
-      this.cookieService.set(COOKIE_SERVICE_KEYS.TOKEN, tokenStr);
-      this.authStore.updateToken(tokenStr);
-      this.router.navigateByUrl(sessionStorage.getItem(SessionStorageKey.RETURN_URL) ?? '/')
-    }, 1000);
+    this.auth.checkLogin();
   }
 
-  get username() {
-    return this.loginForm.get('username');
+  validate() {
+    let check = true;
+    this.invalidStatus.key = {};
+    if (!this.username) {
+        check = false;
+        this.invalidStatus.key['email'] = 'errors.ME_GT_002';
+    }
+    else if (this.username && !emailRegex.exec(this.username)) {
+        check = false;
+        this.invalidStatus.key['email'] = 'errors.ME_GT_001';
+    }
+
+    if (!this.password) {
+        check = false;
+        this.invalidStatus.key['password'] = 'errors.ME_GT_003';
+    }
+    return check;
+  }
+  setErrorClass(name: string) {
+    return this.invalidStatus.key[name] ? this.invalidStatus.className : '';
   }
 
-  get password() {
-    return this.loginForm.get('password');
+  onclickLogin() {
+    // this.spinnerService.show();
+    if (!this.validate()) return;
+    localStorage.setItem(LocalStorageKey.EMAIL, this.username);
+    if (!this.remember) localStorage.removeItem(LocalStorageKey.REMEMBER);
+    else localStorage.setItem(LocalStorageKey.REMEMBER, '1');
+    this.auth.login(this.username.trim(), this.password.trim());
+  }
+
+  onClickSignup(event: any) {
+    event.preventDefault();
+    this.router.navigateByUrl('/auth/signup');
+  }
+
+  onClickForgotPassword() {
+      this.router.navigateByUrl('/auth/forgot-password');
   }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../cores/services';
-import { AuthStore } from '../../../../cores/stores/actions';
-// import { AuthenticationService } from '../../../../core/_services';
+import { AuthDataStore } from '../../../../cores/stores/actions';
 @Component({
   selector: 'app-account-user',
   templateUrl: './account-user.component.html'
@@ -10,7 +9,7 @@ import { AuthStore } from '../../../../cores/stores/actions';
 export class AccountUserComponent implements OnInit {
 
   authService = inject(AuthService);
-  authStates = inject(AuthStore);
+  authStates = inject(AuthDataStore);
   
   constructor(private router: Router) { }
 

@@ -1,23 +1,25 @@
 {
-    "HELLO": "Hello {{value}}",
-    "textLoading": "Loading...",
-    "login": "LOGIN WORKED",
-    "title.dashboard": "DASHBOARD",
-    "title.dashboard-analytics": "Dashboard Analytics",
-    "title.dashboard-ecommerce": "Dashboard Ecommerce",
-    "title.dashboard-sales": "Dashboard Sales",
-    "title.dashboard-crm": "Dashboard CRM",
-    "title.dashboard-project": "Dashboard Project",
-    "title.user": "USER MANAGEMENT",
-    "title.login": "SIGN IN",
-    "subtitle.login": "Enter your email address and password to access admin panel.",
-    "login.welcome": "Welcome, User",
-    "login.signin": "Sign in to continue",
-    "login.username": "Username",
-    "login.password": "Password",
-    "login.rememberMe": "Remember Me",
-    "login.forgotPassword": "Forgot Password?",
-    "login.signinBtn": "Sign In",
-    "login.dontHaveAccount": "Create an account",
-    "login.signUpBtn": "Sign Up"
+    "pages": {
+        "login": {
+            "title": "Login",
+            "subtitle": "Enter your email address and password to access admin panel.",
+            "welcome": "Welcome, User",
+            "signin": "Sign in to continue",
+            "username": "Username",
+            "password": "Password",
+            "rememberMe": "Remember Me",
+            "forgotPassword": "Forgot Password?",
+            "signinBtn": "Sign In",
+            "dontHaveAccount": "Create an account",
+            "signUpBtn": "Sign Up"
+        }
+    },
+    "notification": {
+        "success": "Success",
+        "error": "Error",
+        "info": "Info",
+        "warn": "Warn",
+        "loginError": "System error. Please contact admin for supporting",
+        "loginSuccess": "Login Success"
+    }
 }

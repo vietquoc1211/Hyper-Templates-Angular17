@@ -19,67 +19,52 @@
                                 <p class="text-muted mb-4">{{'subtitle.login' | translate}}</p>
                             </div>
 
-                            <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+                            <div class="row">
                                 <div class="mb-3">
-                                    <label for="{{usernameId}}" class="form-label">{{'login.username' |
-                                        translate}}</label>
-                                    <input pInputText class="form-control" id="{{usernameId}}" type="text"
-                                        formControlName="username" placeholder="Username" pInputText />
-                                    @if (username?.invalid && username?.touched) {
-                                    @if (username?.errors?.['required']) {
-                                    <span class="text-red-500">Please input username</span>
-                                    }
+                                    <label for="{{username}}" class="form-label">{{'pages.login.username' | translate}}</label>
+                                    <input pInputText class="form-control" id="{{username}}" type="text" [(ngModel)]="username" placeholder="Username" pInputText />
+                                    @if(invalidStatus.key['username']) {
+                                        <small id="username-help" class="p-error">{{invalidStatus.key['username'] | translate}}</small>
                                     }
                                 </div>
 
                                 <div class="mb-3">
-                                    <a routerLink="/recoverpw" class="text-muted float-end"><small>{{'login.forgotPassword' | translate}}</small></a>
-                                    <label for="password" class="form-label">{{'login.password' | translate}}</label>
+                                    <a href="#" (click)="onClickForgotPassword()" class="text-muted float-end"><small>{{'pages.login.forgotPassword' | translate}}</small></a>
+                                    <label for="password" class="form-label">{{'pages.login.password' | translate}}</label>
                                     <div class="input-group input-group-merge">
-                                        <input pInputText type="password" id="{{passwordId}}" formControlName="password"
+                                        <input pInputText type="password" id="{{password}}" [(ngModel)]="password"
                                             class="form-control" placeholder="Enter your password">
                                         <div class="input-group-text" data-password="false">
                                             <span class="password-eye"></span>
                                         </div>
-                                        @if (password?.invalid && password?.touched) {
-                                        @if (password?.errors?.['required']) {
-                                        <span class="text-red-500">Please input password</span>
-                                        }
+                                        @if(invalidStatus.key['password']) {
+                                            <small id="password-help" class="p-error">{{invalidStatus.key['password'] | translate}}</small>
                                         }
                                     </div>
                                 </div>
-
                                 <div class="mb-3 mb-3">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="checkbox-signin" checked="">
-                                        <label class="form-check-label" for="checkbox-signin">{{'login.rememberMe' | translate}}</label>
+                                        <label class="form-check-label" for="checkbox-signin">{{'pages.login.rememberMe' | translate}}</label>
                                     </div>
                                 </div>
-
                                 <div class="mb-3 mb-0 text-center">
-                                    <button pButton pRipple class="btn btn-primary" type="submit">{{'login.signinBtn' | translate}}</button>
+                                    <button pButton pRipple class="btn btn-primary" (click)="onclickLogin()">{{'pages.login.signinBtn' | translate}}</button>
                                 </div>
-
-                            </form>
-                        </div> <!-- end card-body -->
+                            </div>
+                        </div>
                     </div>
-                    <!-- end card -->
-
                     <div class="row mt-3">
                         <div class="col-12 text-center">
-                            <p class="text-muted">{{'login.dontHaveAccount' | translate}}
-                                <a routerLink="/register" class="text-muted ms-1">
-                                    <b>{{'login.signUpBtn' | translate}}</b>
+                            <p class="text-muted">{{'pages.login.dontHaveAccount' | translate}}
+                                <a href="#" (click)="onClickSignup($event)" class="text-muted ms-1">
+                                    <b>{{'pages.login.signUpBtn' | translate}}</b>
                                 </a>
                             </p>
-                        </div> <!-- end col -->
+                        </div>
                     </div>
-                    <!-- end row -->
-
-                </div> <!-- end col -->
+                </div> 
             </div>
-            <!-- end row -->
         </div>
-        <!-- end container -->
     </div>
 </div>

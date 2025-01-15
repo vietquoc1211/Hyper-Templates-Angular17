@@ -1,23 +1,25 @@
 {
-    "HELLO": "Xin chào {{value}}",
-    "textLoading": "Đang tải...",
-    "title.dashboard": "Trang tổng quan",
-    "title.dashboard-analytics": "Phân tích trang tổng quan",
-    "title.dashboard-ecommerce": "Trang tổng quan thương mại điện tử",
-    "title.dashboard-sales": "Trang tổng quan bán hàng",
-    "title.dashboard-crm": "Trang tổng quan CRM",
-    "title.dashboard-project": "Trang tổng quan dự án",
-    "title.user": "QUẢN LÝ TÀI KHOẢN",
-    "title.login": "ĐĂNG NHẬP",
-    "subtitle.login": "Nhập địa chỉ email và mật khẩu của bạn để truy cập bảng quản trị.",
-    "login": "TRANG ĐĂNG NHẬP",
-    "login.welcome": "Xin chào, Kháng hàng",
-    "login.signin": "Đăng nhập để tiếp tục",
-    "login.username": "Tên tài khoản",
-    "login.password": "Mật khẩu",
-    "login.rememberMe": "Nhớ tài khoản",
-    "login.forgotPassword": "Quên mật khẩu?",
-    "login.signinBtn": "Đăng nhập",
-    "login.dontHaveAccount": "Chưa có tài khoản?",
-    "login.signUpBtn": "Đăng ký"
+    "pages": {
+        "login": {
+            "title": "Login",
+            "subtitle": "Enter your email address and password to access admin panel.",
+            "welcome": "Welcome, User",
+            "signin": "Sign in to continue",
+            "username": "Username",
+            "password": "Password",
+            "rememberMe": "Remember Me",
+            "forgotPassword": "Forgot Password?",
+            "signinBtn": "Sign In",
+            "dontHaveAccount": "Create an account",
+            "signUpBtn": "Sign Up"
+        }
+    },
+    "notification": {
+        "success": "Success",
+        "error": "Error",
+        "info": "Info",
+        "warn": "Warn",
+        "loginError": "System error. Please contact admin for supporting",
+        "loginSuccess": "Login Success"
+    }
 }

@@ -14,7 +14,6 @@ import {
     ToastService
 } from './services';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { AuthStore } from './stores/actions';
 import { CookieService } from 'ngx-cookie-service';
 import { MenuService } from '../shared/services/app.menu.service';
 import { LayoutService } from '../shared/services/app.layout.service';
@@ -33,8 +32,7 @@ const DATA_SERVICES = [
     ToastService,
     MenuService,
     LayoutService,
-    NgxSpinnerService,
-    AuthStore
+    NgxSpinnerService
 ];
 
 @NgModule({

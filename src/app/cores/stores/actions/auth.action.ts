@@ -1,54 +1,75 @@
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { UserInfo } from '../../models';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
-import { computed, inject } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { tapResponse } from '@ngrx/operators';
+import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
+import { inject } from '@angular/core';
+import { User } from '../../../shared/models/user.model';
+import { PagePermission } from '../../../shared/models/masterdata.model';
+import { LocalStorageKey, SignUpStepType, StatusCodes } from '../../../shared/enums';
+import { AuthService } from '../../services';
+import { SystemService } from '../../../pages/system/services/system.service';
 
-type AuthState = {
-    token: string;
-    userInfo: UserInfo | Object;
-    isLoading: boolean;
+export type AuthState = {
+    userInfo: User | null;
+    step: number;
+    pagePermission: PagePermission | null;
+    isPagePermissionLoading: boolean;
 };
 
 const initialState: AuthState = {
-    token: '',
-    userInfo: {},
-    isLoading: false,
+    userInfo: null,
+    step: SignUpStepType.STEP1,
+    pagePermission: null,
+    isPagePermissionLoading: false
 };
 
-export const AuthStore = signalStore(
+export const AuthDataStore = signalStore(
+    { providedIn: 'root' },
     withState(initialState),
-    withMethods((store, authService = inject(AuthService)) => ({
-        updateToken(token: string): void {
-            patchState(store, (state) => ({ token: token }));
-        },
-        updateUserInfo(user: UserInfo | Object): void {
-            patchState(store, (state) => ({ userInfo: { ...user } }));
-        },
+    withMethods((store, authService = inject(AuthService), systemService = inject(SystemService)) => ({
         initialDefaultStates(): void {
-            patchState(store, (state) => ({ ...initialState }));
+            patchState(store, { ...initialState });
         },
-        loadByUsername: rxMethod<string>(
-            pipe(
-                debounceTime(300),
-                distinctUntilChanged(),
-                tap(() => patchState(store, { isLoading: true })),
-                switchMap((username: string) => {
-                    return authService.getUserInfo(username).pipe(
-                        tapResponse({
-                            next: (response) => {
-                                if (response.code === 1) {
-                                    patchState(store, { userInfo: { ...response.data } })
-                                }
-                            },
-                            error: (error) => console.error(error),
-                            finalize: () => patchState(store, { isLoading: false })
-                        })
-                    );
-                })
-            )
-        )
-    }))
+        updateUserInfo: (user: User) => {
+            patchState(store, { userInfo: { ...user } });
+        },
+        updateSignUpStep: (step: number) => {
+            patchState(store, { step: step });
+        },
+        loadUserInfoByLogin: () => {
+            const getUserLocal = localStorage.getItem(LocalStorageKey.USER);
+            if (!getUserLocal) {
+                patchState(store, { userInfo: { ...authService.userValue } });
+                return;
+            };
+            patchState(store, { userInfo: JSON.parse(getUserLocal) });
+        },
+        loadPermissionButtons: (path: string) => {
+            const getUserLocal = localStorage.getItem(LocalStorageKey.USER);
+            if (!getUserLocal) return [];
+            const userInfo = JSON.parse(getUserLocal) as User;
+            patchState(store, { isPagePermissionLoading: true });
+            return systemService.getPermissionsByPage(path, userInfo.role ?? "").subscribe({
+                next: (payload) => {
+                    if (payload) {
+                        if (payload.statusCode !== StatusCodes.SUCCESS) {
+                            patchState(store, { pagePermission: null });
+                            return;
+                        }
+                        if (!payload.data || !Object.keys(payload.data).length) return;
+                        patchState(store, { pagePermission: {...payload.data} });
+                    }
+                },
+                error: (e) => {
+                    patchState(store, { pagePermission: null });
+                },
+                complete: () => {
+                    patchState(store, { isPagePermissionLoading: false });
+                }
+            })
+        },
+    })),
+    withHooks({
+        onInit({ loadUserInfoByLogin, initialDefaultStates }) {
+            initialDefaultStates();
+            loadUserInfoByLogin();
+        }
+    })
 );

@@ -20,7 +20,7 @@ export class MessageService {
   createHubConnection(user: User, otherUsername: string){
     
     this.hubConnection = new HubConnectionBuilder()
-    .withUrl(environment.apiConfig.hubUrl + 'message?user=' + otherUsername, {
+    .withUrl(environment.hubUrl + 'message?user=' + otherUsername, {
       accessTokenFactory: ()=> user.access_token
     }).withAutomaticReconnect().build()
 
@@ -59,7 +59,7 @@ export class MessageService {
     params = params.append('pageSize', pageSize.toString());
     params = params.append('otherUsername', recipientUsername);
 
-    return this.http.get<IMessage[]>(environment.apiConfig.chatApiUrl + 'Messages', { observe: 'response', params }).pipe(
+    return this.http.get<IMessage[]>(environment.chatApiUrl + 'Messages', { observe: 'response', params }).pipe(
       map(response => {              
         this.messageThread$.pipe(take(1)).subscribe(messages => {
           if (response.body) {

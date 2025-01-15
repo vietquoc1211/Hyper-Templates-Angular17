@@ -1,36 +1,50 @@
-export class BaseModel {
-    code!: number;
-    msg!: Message;
-    data: any;
+import { LangCode } from "../enums/langcode";
+
+export class BaseResponse<T> {
+    statusCode: number = 200;
+    message: string = '';
+    lang: LangCode = LangCode.English;
+    data: T | null = null;
+    totalRecord?: number;
 }
 
-interface Message {
-    value: string;
-    key: string;
-}
-
-export interface Auth {
-    token: string;
-    exp: number;
-}
-
-export interface ListData<T> {
-    list: Array<T>;
-    total: number;
-    pageIndex: number;
-}
-
-export interface GeneralColumns {
-    createdTime?: Date;
+export interface CommonTableColumns {
     createdBy?: string;
-    updatedTime?: Date;
+    createdAt?: Date;
+    createdByName?: string;
     updatedBy?: string;
-    deletedTime?: Date;
+    updatedAt?: Date;
+    updatedByName?: string;
     deletedBy?: string;
-    deletedFlag?: number;
+    deletedAt?: Date;
+    deletedByName?: string;
 }
 
-export type ErrorType = {
-    class: 'ng-invalid ng-dirty',
-    value: Record<string, string>
+export interface Column {
+    field: string;
+    className?: string;
+    minWidth?: string;
+    type?: number;
+    data?: any;
+    value?: any;
+    hidden: boolean;
+    propertyType?: string;
+}
+
+export class PaginationTypes {
+    pageIndex: number = 0;
+    pageSize: number = 50;
+}
+
+export type CommonDropdownItem = {
+    label: string;
+    code: any;
+    option?: string;
+    disabled?: boolean;
+}
+
+export class ValidateInputStatus {
+    key: Record<string, string> = {};
+    className: string = 'ng-dirty ng-invalid';
+    id: string = '';
 }

@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
-import { SystemRoutingModule } from './system-routing.module';
 import { SharedModule } from '../../shared/shared.module';
-import { UserListComponent } from './components/users-list/user-list.component';
-import { UserService } from './services/user.service';
+import { RolePermissionComponent } from './components/role-permission/role-permission.component';
+import { SystemRoutingModule } from './system-routing.module';
+import { CommonModule } from '@angular/common';
+import {Ripple} from "primeng/ripple";
+import { CoreModule } from '../../cores/cores.module';
 
 @NgModule({
-    imports: [
-        SystemRoutingModule,
-        SharedModule,
-    ],
     declarations: [
-        UserListComponent
+        RolePermissionComponent
     ],
-    exports: [],
-    providers: [ 
-        UserService
-    ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        CoreModule,
+        SystemRoutingModule,
+        Ripple
+    ],
+    providers: []
 })
 export class SystemModule { }

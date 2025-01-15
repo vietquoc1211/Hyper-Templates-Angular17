@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CommonService } from './common.service';
+import { MessageType } from '../../shared/enums';
 
 @Injectable()
 export class ToastService {
@@ -27,6 +28,15 @@ export class ToastService {
 
     showConnectionMsg(message: string = '', severity: string = 'warn', summary: string = 'Warn Message') {
         this.service.add({ key: 'connection', severity: severity, summary: summary, detail: message });
+    }
+
+    async customMessage(message: string = '', severity: string = MessageType.SUCCESS) {
+        this.service.add({
+            key: 'glotoss',
+            severity: severity,
+            summary: await this.commonService.getTranslateAsync(`notification.${severity}`),
+            detail: message
+        });
     }
 
     clear(key: string = '') {

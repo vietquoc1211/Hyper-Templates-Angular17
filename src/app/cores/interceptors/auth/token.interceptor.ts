@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { ApiService } from '../../services/api.service';
 import { COOKIE_SERVICE_KEYS } from '../../../shared/enums';
-import { AuthStore } from '../../stores/actions';
 import { AuthService } from '../../services';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthDataStore } from '../../stores/actions';
 
 export const TokenInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
-  const authState = inject(AuthStore);
+  const authState = inject(AuthDataStore);
   const apiService = inject(ApiService);
   const authService = inject(AuthService);
   const cookieService = inject(CookieService);

@@ -1,10 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
-import { AuthStore } from './cores/stores/actions';
-import { getState } from '@ngrx/signals';
+import { AuthDataStore } from './cores/stores/actions';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { COOKIE_SERVICE_KEYS, LocalStorageKey } from './shared/enums';
+import {  LocalStorageKey } from './shared/enums';
 import { PrimeNGConfig } from 'primeng/api';
 import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
@@ -22,34 +21,17 @@ import { CommonService } from './cores/services';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [AuthStore, TranslateService, NgxSpinnerService, CommonService]
+  providers: [TranslateService, NgxSpinnerService, CommonService]
 })
 export class AppComponent {
-  readonly authStore = inject(AuthStore);
+  readonly authStore = inject(AuthDataStore);
   readonly router = inject(Router);
   readonly translationService = inject(TranslateService);
   readonly primengConfig = inject(PrimeNGConfig);
   readonly cookieService = inject(CookieService);
 
   constructor() {
-    effect(() => {
-      const state = getState(this.authStore);
-      
-    });
-
     this.primengConfig.ripple = true;
-
-    //Fake auth data
-    localStorage.setItem(LocalStorageKey.USER,
-      JSON.stringify({
-        firstName: "Viet",
-        lastName: "Bui",
-        username: "vietbui"
-      })
-    );
-    
-    //Update token from cookie to state
-    this.authStore.updateToken(this.cookieService.get(COOKIE_SERVICE_KEYS.TOKEN) as string);
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     const language = localStorage.getItem(LocalStorageKey.LANGUAGE) || 'vi';
